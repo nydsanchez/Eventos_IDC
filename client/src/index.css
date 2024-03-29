@@ -35,7 +35,7 @@ body {
 
   grid-template-columns: 1fr 5fr;
   grid-template-rows: 7rem 100vh;
-  text-align: center;
+
   column-gap: 2.6rem;
   overflow-x: hidden;
 }
@@ -48,12 +48,10 @@ body {
 /*  ASIDE MENU  */
 .app > nav {
   grid-area: nav;
-  border: 2px solid gray;
   margin-top: 3rem;
 }
 /* MAIN SECTION*/
 .app > main {
   grid-area: main;
-  margin-top: 3rem;
-  border: 2px solid orange;
+  margin: 3rem;
 }

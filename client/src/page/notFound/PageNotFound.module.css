@@ -1,0 +1,47 @@
+.notfound {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3.2rem;
+  position: relative;
+}
+.img_NotFound {
+  width: 90%;
+  height: 80%;
+}
+.img_NotFound img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.notfound h2 {
+  font-size: 6.4rem;
+}
+
+.notfound p {
+  color: inherit;
+  font-weight: bolder;
+  font-size: 3.2rem;
+  text-wrap: wrap;
+}
+
+.notfound a:link,
+.notfound a:visited {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 1.8rem;
+  color: #fff;
+  border: 1px solid #fff;
+  padding: 1.2rem;
+  border-radius: 6px;
+  transition: all 0.3s;
+  position: absolute;
+  bottom: 0;
+  transform: translate(0, -15rem);
+  transition: all 1s;
+}
+
+.notfound a:hover {
+  background: #00285a;
+}
