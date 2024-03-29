@@ -1,4 +1,4 @@
-const { Ticket, Persona, Evento } = require("../db");
+const { Tickets, People, Event } = require("../db");
 
 const regTicket = async (req, res) => {
   try {
@@ -25,13 +25,13 @@ const regTicket = async (req, res) => {
     ) {
       console.log("Recibidos todos los datos");
 
-      const evento = await Evento.findByPk(Number(id_event));
+      const evento = await Event.findByPk(Number(id_event));
       if (!evento) {
         return res.status(404).json({ error: "Evento no encontrado" });
       }
 
       const totalTicketsEvento = evento.num_tickets;
-      const existingTicket = await Ticket.findOne({
+      const existingTicket = await Tickets.findOne({
         where: { id_ticket, id_event },
       });
 
@@ -49,9 +49,9 @@ const regTicket = async (req, res) => {
         9
       )}-${person_id.substring(5, 7)}-${person_id.substring(3, 5)}`;
 
-      let person = await Persona.findByPk(person_id);
+      let person = await People.findByPk(person_id);
       if (!person) {
-        person = await Persona.create({
+        person = await People.create({
           id: person_id,
           name,
           genre,
@@ -60,7 +60,7 @@ const regTicket = async (req, res) => {
         });
       }
 
-      const ticket = await Ticket.create({
+      const ticket = await Tickets.create({
         id_ticket,
         id_event,
         vendedor: salePerson,
@@ -70,7 +70,7 @@ const regTicket = async (req, res) => {
       });
 
       if (id_ticket == totalTicketsEvento) {
-        await evento.update({ event_state: "finalizado" });
+        await Event.update({ event_state: "finalizado" });
       }
 
       return res

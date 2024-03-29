@@ -1,6 +1,6 @@
-const { Evento } = require("../db");
+const { Event } = require("../db");
 
-const postEvento = async (req, res) => {
+const postMeeting = async (req, res) => {
   try {
     const { name, event_type, description, start_date, end_date, tickets } =
       req.body;
@@ -13,7 +13,7 @@ const postEvento = async (req, res) => {
       end_date &&
       tickets
     ) {
-      const existingEvent = await Evento.findOne({
+      const existingEvent = await Event.findOne({
         where: {
           event_name: name,
           start_date,
@@ -25,7 +25,7 @@ const postEvento = async (req, res) => {
         return res.status(400).send("¡Este evento ya está registrado!");
       } else {
         // Si no existe un evento con los mismos detalles, crear un nuevo registro
-        const newEvent = await Evento.create({
+        const newEvent = await Event.create({
           event_name: name,
           event_type,
           event_desc: description,
@@ -47,4 +47,4 @@ const postEvento = async (req, res) => {
   }
 };
 
-module.exports = postEvento;
+module.exports = postMeeting;

@@ -1,15 +1,12 @@
-const server = require("./src/app.js");
-
+const server = require("./src/server");
 const { conn } = require("./src/db.js");
 const PORT = 4000;
 
 conn
-  .sync({ force: false }) //retorna una promesa
+  .sync({ force: true })
   .then(() => {
     server.listen(PORT, () => {
-      console.log("Server raised in port: ", PORT);
+      console.log(`Server listening on port ${PORT}`);
     });
   })
-  .catch(function (error) {
-    console.log(error.message);
-  });
+  .catch((error) => console.error(error));

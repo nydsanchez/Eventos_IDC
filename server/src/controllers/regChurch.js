@@ -1,10 +1,10 @@
-const { Congregacion } = require("../db");
+const { Church } = require("../db");
 
 const regChurch = async (req, res) => {
   try {
     const { name, state, address, phone } = req.body;
     if (name && state && address && phone) {
-      const [congregacion, created] = await Congregacion.findOrCreate({
+      const [church, created] = await Church.findOrCreate({
         where: {
           church_name: name,
           church_state: state,
