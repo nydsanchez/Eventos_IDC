@@ -1,9 +1,55 @@
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addData } from "../../redux/actions";
+
+import validation from "../../assets/javascript/validation";
 import styles from "./form.module.css";
 
 export default function Church() {
+  const [newData, setNewData] = useState({
+    name: "",
+    state: "",
+    address: "",
+    phone: "",
+  });
+  const [errors, setErrors] = useState({});
+
+  const dispatch = useDispatch();
+  const error = useSelector((state) => state.error);
+  const loading = useSelector((state) => state.loading);
+
+  useEffect(() => {
+    if (error) {
+      alert(error);
+    }
+  }, [error]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewData({ ...newData, [name]: value });
+
+    const updatedErrors = validation({ ...newData, [name]: value });
+    setErrors(updatedErrors);
+  };
+
+  function delete_formData() {
+    setNewData({
+      name: "",
+      state: "",
+      address: "",
+      phone: "",
+    });
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(addData("churches", newData));
+    delete_formData();
   };
+
+  function handleClearData() {
+    delete_formData();
+  }
 
   return (
     <main>
@@ -19,11 +65,27 @@ export default function Church() {
           <form className={styles.formChurch} onSubmit={handleSubmit}>
             <div className={styles.miembros_info_personal}>
               <label htmlFor="name">Nombre de la congregación:</label>
-              <input type="text" name="name" id="name" />
+              <input
+                type="text"
+                name="name"
+                id="name"
+                value={newData.name}
+                onChange={handleChange}
+              />{" "}
+              {errors.e1 ? (
+                <p className={styles.error_msg}>{errors.e1}</p>
+              ) : (
+                <p>&nbsp;</p>
+              )}
             </div>
             <div className={styles.miembros_info_personal}>
               <label htmlFor="state">Departamento:</label>
-              <select name="state" id="state">
+              <select
+                name="state"
+                id="state"
+                value={newData.state}
+                onChange={handleChange}
+              >
                 <option value="">Seleccione una opción</option>
                 <option value="Boaco">Managua</option>
                 <option value="Carazo">Carazo</option>
@@ -42,21 +104,54 @@ export default function Church() {
                 <option value="Rio San Juan">Río San Juan</option>
                 <option value="RACCN">Región Autonoma del Caribe Norte</option>
                 <option value="RACCS">Región Autonoma del Caribe Sur</option>
-              </select>
+              </select>{" "}
+              {errors.e1 ? (
+                <p className={styles.error_msg}>{errors.e1}</p>
+              ) : (
+                <p>&nbsp;</p>
+              )}
             </div>
             <div className={styles.miembros_info_personal}>
               <label htmlFor="address">Dirección de la congregación</label>
-              <input type="text" name="address" id="address" />
+              <input
+                type="text"
+                name="address"
+                id="address"
+                value={newData.address}
+                onChange={handleChange}
+              />{" "}
+              {errors.e1 ? (
+                <p className={styles.error_msg}>{errors.e1}</p>
+              ) : (
+                <p>&nbsp;</p>
+              )}
             </div>
 
             <div className={styles.miembros_info_personal}>
               <label htmlFor="phone">Teléfono de la congregación</label>
-              <input type="text" name="phone" id="phone" />
+              <input
+                type="text"
+                name="phone"
+                id="phone"
+                value={newData.phone}
+                onChange={handleChange}
+              />{" "}
+              {errors.e1 ? (
+                <p className={styles.error_msg}>{errors.e1}</p>
+              ) : (
+                <p>&nbsp;</p>
+              )}
             </div>
 
-            <button className={styles.btn_form}>Guardar datos</button>
-            <button className={styles.btn_form}>
-              Borrar datos del formulario
+            <button className={styles.btn_form} disabled={loading}>
+              {loading ? "Enviando..." : "Registrar"}
+            </button>
+            <button
+              className={styles.btn_form}
+              onClick={handleClearData}
+              disabled={loading}
+            >
+              Limpiar datos
             </button>
           </form>
         </div>

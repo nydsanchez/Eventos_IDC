@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addData } from "../../redux/actions";
+import { addData, getData } from "../../redux/actions";
 
 import Select from "../select/Select";
 
@@ -26,14 +26,12 @@ export default function People({ onClose, isModal }) {
   const [confirmClear, setConfirmClear] = useState(false);
 
   const dispatch = useDispatch();
-  const error = useSelector((state) => state.error);
+  //  const error = useSelector((state) => state.error);
   const loading = useSelector((state) => state.loading);
 
   useEffect(() => {
-    if (error) {
-      alert(error);
-    }
-  }, [error]);
+    dispatch(getData("churches"));
+  }, [dispatch]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -181,6 +179,7 @@ export default function People({ onClose, isModal }) {
                 onChange={handleChange}
                 idKey="id"
                 nameKey="church_name"
+                entityType="churches"
               />
 
               {errors.e1 ? (

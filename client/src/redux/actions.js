@@ -78,3 +78,18 @@ export const updateData = (entity, newData) => {
     }
   };
 };
+// export const getInitialData = () => {
+//   return async (dispatch) => {
+//     try {
+//       // Realizar la solicitud de datos a la API
+//       const response = await fetch("URL_DE_TU_API");
+//       const data = await response.json();
+
+//       // Despachar la acción de éxito con los datos recibidos
+//       dispatch(fetchDataSuccess(data));
+//     } catch (error) {
+//       // En caso de error, despachar la acción de falla
+//       dispatch(fetchDataFailure(error.message));
+//     }
+//   };
+// };

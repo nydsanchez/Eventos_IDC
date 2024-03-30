@@ -54,7 +54,7 @@ export default function Event() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addData("evento", newData));
+    dispatch(addData("eventos", newData));
     delete_formData();
   };
 
