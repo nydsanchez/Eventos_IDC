@@ -19,7 +19,7 @@ function App() {
         <Route path="/congregaciones" element={<Church />} />
         <Route path="/tickets" element={<Ticket />} />
         <Route path="/eventos" element={<Event />} />
-        <Route path="/participantes" element={<People />} />
+        <Route path="/participantes" element={<People isModal={false} />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </div>

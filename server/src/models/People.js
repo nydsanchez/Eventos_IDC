@@ -19,6 +19,14 @@ module.exports = (sequelize) => {
           notNull: { msg: "Name is a required property." },
         },
       },
+      address: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: { msg: "Name cannot be empty." },
+          notNull: { msg: "Name is a required property." },
+        },
+      },
       phone: {
         type: DataTypes.STRING,
         allowNull: false,

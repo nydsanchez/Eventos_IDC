@@ -1,5 +1,14 @@
 .grid_container {
   display: grid;
+  grid-template-columns: 2fr;
+  overflow: hidden;
+  box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.015);
+  border-radius: 11px;
+  background: #fff;
+}
+
+.grid_container_2col {
+  display: grid;
   grid-template-columns: 2fr 1fr;
   overflow: hidden;
   box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.015);
@@ -7,17 +16,29 @@
   background: #fff;
 }
 
-.grid_container_img {
+.grid_container_imgChurch {
   background-image: linear-gradient(to right bottom, #004c9c4d, #00285a4d),
     url("../../../public/church-ver2.jpg");
   background-size: cover;
   background-position: top center;
 }
+.grid_container_imgTicket {
+  background-image: linear-gradient(to right bottom, #004c9c4d, #00285a4d),
+    url("../../../public/church-ver2.jpg");
+  background-size: cover;
+  background-position: top center;
+}
+.grid_container_imgPeople {
+  background-image: linear-gradient(to right bottom, #004c9c4d, #00285a4d),
+    url("../../../public/church-ver2.jpg");
+  background-size: cover;
+  background-position: top center;
+}
+
 .subtitle {
   font-size: 2.42rem;
-  font-family: "open sans", sans-serif;
+  font-family: "open sans" sans-serif;
   text-align: right;
-
   margin-bottom: 1.7rem;
 }
 
@@ -27,7 +48,7 @@
 
 .grid_container_text > h3 {
   font-size: 2.4rem;
-  font-family: "open sans", sans-serif;
+  font-family: "open sans" sans-serif;
   margin: 0.7rem 0;
   font-weight: 300;
   letter-spacing: 0;
@@ -71,10 +92,6 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-/* .inputDate {
-  text-align: left;
-} */
-
 .formDate {
   display: flex;
   gap: 2.4rem;
@@ -99,68 +116,33 @@
   color: var(--color-title);
 }
 
-/* .container {
-  margin: 3rem 3rem 3rem 1rem;
-}
-
-
-.miembros_info_personal label,
-.formDate label {
-  display: block;
-  font-size: 1.4rem;
-  font-style: normal;
-  font-weight: 500;
-  margin-bottom: 1.2rem;
-}
-
-.formChurch > button {
-  margin-top: 10px;
-  padding: 10px;
-  width: 50%;
-  margin: 0 auto;
-  border-radius: 50px;
-  border: 1px solid gray;
-  transition: all 0.5s;
-}
-
-.formChurch > button:hover {
-  cursor: pointer;
-  background-image: linear-gradient(
-    90deg,
-    rgba(0, 76, 156, 1) 0%,
-    rgba(0, 40, 90, 1) 100%
-  );
-  color: white;
-}
-
-.miembros_info_personal input,
-.miembros_info_personal select,
-.miembros_info_personal textarea,
-.formDate input {
-  width: 100%;
-  padding: 1.2rem;
-  font-size: 1.4rem;
-  font-family: inherit;
-  color: #fff;
-  border: none;
-  background-image: linear-gradient(
-    90deg,
-    rgba(0, 76, 156, 1) 0%,
-    rgb(46, 126, 224) 100%
-  );
-  border-radius: 0.9rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-.formDate {
-  display: flex;
-  gap: 2.4rem;
-  flex-wrap: wrap;
-}
-
+/* 
 .error_msg {
   color: red;
 }
 
-
-
  */
+
+.modalMain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.685);
+  z-index: 10;
+}
+
+.modalContent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+
+  width: 70%;
+}
+
+.subtitleModal {
+  display: none;
+}
