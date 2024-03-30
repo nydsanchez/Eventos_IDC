@@ -1,6 +1,6 @@
 const { Church } = require("../db");
 
-const regChurch = async (req, res) => {
+const postChurch = async (req, res) => {
   try {
     const { name, state, address, phone } = req.body;
     if (name && state && address && phone) {
@@ -25,4 +25,4 @@ const regChurch = async (req, res) => {
     return res.status(500).send("Error interno del servidor");
   }
 };
-module.exports = regChurch;
+module.exports = postChurch;

@@ -1,6 +1,23 @@
 const { Event } = require("../db");
 
-const postMeeting = async (req, res) => {
+const getEvents = async (req, res) => {
+  try {
+    const count = await Event.count();
+    if (count !== 0) {
+      const allEvents = await Event.findAll();
+      console.log(allEvents);
+      return res.status(200).json(allEvents);
+    } else {
+      return res
+        .status(400)
+        .json({ message: "no se han registrado ningun evento" });
+    }
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
+const postEvento = async (req, res) => {
   try {
     const { name, event_type, description, start_date, end_date, tickets } =
       req.body;
@@ -55,4 +72,4 @@ const postMeeting = async (req, res) => {
   }
 };
 
-module.exports = postMeeting;
+module.exports = { getEvents, postEvento };

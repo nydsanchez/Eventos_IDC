@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addEvent } from "../../redux/actions";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addData } from "../../redux/actions";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -8,7 +8,7 @@ import validation from "../../assets/javascript/validation";
 import styles from "./form.module.css";
 
 export default function Event() {
-  const [eventData, setEventData] = useState({
+  const [newData, setNewData] = useState({
     name: "",
     event_type: "",
     start_date: null,
@@ -19,23 +19,30 @@ export default function Event() {
   const [errors, setErrors] = useState({});
 
   const dispatch = useDispatch();
-  // const error = useSelector((state) => state.error);
+  const error = useSelector((state) => state.error);
+  const loading = useSelector((state) => state.loading);
+
+  useEffect(() => {
+    if (error) {
+      alert(error);
+    }
+  }, [error]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setEventData({ ...eventData, [name]: value });
+    setNewData({ ...newData, [name]: value });
 
-    const updatedErrors = validation({ ...eventData, [name]: value });
+    const updatedErrors = validation({ ...newData, [name]: value });
     setErrors(updatedErrors);
   };
 
   const handleDateChange = (date, field) => {
-    setEventData({ ...eventData, [field]: date });
-    const updatedErrors = validation({ ...eventData, [field]: date });
+    setNewData({ ...newData, [field]: date });
+    const updatedErrors = validation({ ...newData, [field]: date });
     setErrors(updatedErrors);
   };
   function delete_formData() {
-    setEventData({
+    setNewData({
       name: "",
       event_type: "",
       start_date: null,
@@ -47,18 +54,13 @@ export default function Event() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(typeof eventData);
-    dispatch(addEvent(eventData));
+    dispatch(addData("evento", newData));
     delete_formData();
   };
 
-  function handleChangeOnClick() {
+  function handleClearData() {
     delete_formData();
   }
-
-  // const showAlert = (message) => {
-  //   alert(message);
-  // };
 
   return (
     <main>
@@ -77,7 +79,7 @@ export default function Event() {
                 type="text"
                 name="name"
                 id="name"
-                value={eventData.name}
+                value={newData.name}
                 onChange={handleChange}
               />
 
@@ -96,7 +98,7 @@ export default function Event() {
               <select
                 name="event_type"
                 id="event_type"
-                value={eventData.event_type}
+                value={newData.event_type}
                 onChange={handleChange}
               >
                 <option value="">Seleccione una opción</option>
@@ -119,7 +121,7 @@ export default function Event() {
               <label htmlFor="start_date">Fecha de inicio:</label>
               <DatePicker
                 className={styles.inputDate}
-                selected={eventData.start_date}
+                selected={newData.start_date}
                 onChange={(date) => handleDateChange(date, "start_date")}
                 dateFormat="dd/MM/yyyy"
               />
@@ -129,7 +131,7 @@ export default function Event() {
               <label htmlFor="end_date">Fecha de finalización:</label>
               <DatePicker
                 className={styles.inputDate}
-                selected={eventData.end_date}
+                selected={newData.end_date}
                 onChange={(date) => handleDateChange(date, "end_date")}
                 dateFormat="dd/MM/yyyy"
               />
@@ -142,7 +144,7 @@ export default function Event() {
                 type="number"
                 name="tickets"
                 id="tickets"
-                value={eventData.tickets}
+                value={newData.tickets}
                 onChange={handleChange}
               />
             </div>
@@ -153,19 +155,24 @@ export default function Event() {
                 id="description"
                 cols="30"
                 rows="5"
-                value={eventData.description}
+                value={newData.description}
                 onChange={handleChange}
               ></textarea>
             </div>
 
-            <button className={styles.btn_form}>Registrar</button>
-            <button className={styles.btn_form} onClick={handleChangeOnClick}>
+            <button className={styles.btn_form} disabled={loading}>
+              {loading ? "Enviando..." : "Registrar"}
+            </button>
+            <button
+              className={styles.btn_form}
+              onClick={handleClearData}
+              disabled={loading}
+            >
               Limpiar datos
             </button>
           </form>
         </div>
       </div>
-      {/* {error && showAlert(error)} */}
     </main>
   );
 }

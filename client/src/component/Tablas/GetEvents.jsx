@@ -1,12 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getEvents } from "../../redux/actions";
+import { getData } from "../../redux/actions";
 import { FaPencil, FaEye, FaEraser } from "react-icons/fa6";
 import styles from "./tablas.module.css";
 
 function GetEvents() {
   const dispatch = useDispatch();
-  const eventos = useSelector((state) => state.events);
+  const eventos = useSelector((state) => state.data.eventos);
 
   const handleEdit = (index) => {
     // Lógica para editar el elemento con el índice proporcionado
@@ -24,7 +24,7 @@ function GetEvents() {
   };
   console.log(eventos);
   useEffect(() => {
-    dispatch(getEvents());
+    dispatch(getData("eventos"));
   }, [dispatch]);
   return (
     <main>

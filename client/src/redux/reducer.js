@@ -1,26 +1,103 @@
-import { ADD_EVENT, GET_EVENT, EVENT_FAILURE } from "./action_types";
+import {
+  ADD_DATA,
+  GET_DATA,
+  UPDATE_DATA,
+  DATA_SUCCESS,
+  DATA_FAILURE,
+} from "./action_types";
 
 const initialState = {
-  events: [],
+  data: {
+    churches: [],
+    eventos: [],
+    tickets: [],
+    people: [],
+    asistencia: [],
+  },
+  searchResults: [],
+  error: null,
+  success: false,
+  loading: false,
 };
 
-const reducer = (state = initialState, { type, payload }) => {
+const reducer = (state = initialState, { type, payload, success }) => {
   switch (type) {
-    case ADD_EVENT:
+    case GET_DATA:
       return {
         ...state,
-        event: payload,
+        loading: true,
+        error: null,
       };
-    case GET_EVENT:
+
+    case ADD_DATA: {
+      if (success) {
+        const { entity, data } = payload;
+        return {
+          ...state,
+          data: {
+            ...state.data,
+            [entity]: [...state.data[entity], data], // Agrega el nuevo dato al final del array existente
+          },
+          loading: false,
+          success: true,
+          error: null,
+        };
+      } else {
+        return {
+          ...state,
+          loading: false,
+          success: false,
+          error: payload,
+        };
+      }
+    }
+
+    case UPDATE_DATA:
+      if (success) {
+        const { entity, data } = payload;
+        return {
+          ...state,
+          data: {
+            ...state.data,
+            [entity]: state.data[entity].map((item) =>
+              item.id === data.id ? data : item
+            ),
+          },
+          loading: false,
+          success: true,
+          error: null,
+        };
+      } else {
+        return {
+          ...state,
+          loading: false,
+          success: false,
+          error: payload,
+        };
+      }
+
+    case DATA_SUCCESS: {
+      const { entity, data } = payload;
       return {
         ...state,
-        events: payload,
+        data: {
+          ...state.data,
+          [entity]: data,
+        },
+        loading: false,
+        success: true,
+        error: null,
       };
-    case EVENT_FAILURE:
+    }
+
+    case DATA_FAILURE:
       return {
         ...state,
+        loading: false,
+        success: false,
         error: payload,
       };
+
     default:
       return state;
   }

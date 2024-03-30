@@ -1,48 +1,80 @@
 import axios from "axios";
-import { ADD_EVENT, GET_EVENT, EVENT_FAILURE } from "./action_types";
+import {
+  GET_DATA,
+  ADD_DATA,
+  UPDATE_DATA,
+  DATA_SUCCESS,
+  DATA_FAILURE,
+} from "./action_types";
+
 const URL = "http://localhost:4000";
-export const addEvent = (eventData) => {
+
+export const addData = (entity, newData) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(
-        "http://localhost:4000/evento",
-        eventData
-      );
+      const response = await axios.post(`${URL}/${entity}`, newData);
       return dispatch({
-        type: ADD_EVENT,
-        payload: response.data,
+        type: ADD_DATA,
+        payload: { entity, data: response.data },
+        success: true,
       });
     } catch (error) {
-      if (error.response && error.response.data) {
-        dispatch({
-          type: EVENT_FAILURE,
-          payload: error.response.data,
-        });
-      } else {
-        dispatch({
-          type: EVENT_FAILURE,
-          payload: "Ocurrió un error al procesar la solicitud.",
-        });
-      }
+      const errorMessage = error.response
+        ? error.response.data
+        : "Error al agregar los datos";
+      dispatch({
+        type: DATA_FAILURE,
+        payload: errorMessage,
+        success: false,
+      });
     }
   };
 };
 
-export const getEvents = () => async (dispatch) => {
-  try {
-    const { data } = await axios.get(`${URL}/eventos`);
-    dispatch({ type: GET_EVENT, payload: data });
-  } catch (error) {
-    if (error.response && error.response.data) {
+export const getData = (entity) => {
+  return async (dispatch) => {
+    dispatch({ type: GET_DATA });
+    try {
+      const response = await axios.get(`${URL}/${entity}`);
       dispatch({
-        type: EVENT_FAILURE,
-        payload: error.response.data,
+        type: DATA_SUCCESS,
+        payload: { entity, data: response.data },
+        success: true,
       });
-    } else {
+    } catch (error) {
+      const errorMessage = error.response
+        ? error.response.data
+        : "Error al cargar los datos";
       dispatch({
-        type: EVENT_FAILURE,
-        payload: "Ocurrió un error al procesar la solicitud.",
+        type: DATA_FAILURE,
+        payload: errorMessage,
+        success: false,
       });
     }
-  }
+  };
+};
+
+export const updateData = (entity, newData) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(
+        `${URL}/${entity}/${newData.id}`,
+        newData
+      );
+      dispatch({
+        type: UPDATE_DATA,
+        payload: { entity, data: response.data },
+        success: true,
+      });
+    } catch (error) {
+      const errorMessage = error.response
+        ? error.response.data
+        : "Error al actualizar los datos";
+      dispatch({
+        type: DATA_FAILURE,
+        payload: errorMessage,
+        success: false,
+      });
+    }
+  };
 };

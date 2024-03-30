@@ -1,13 +1,14 @@
 const router = require("express").Router();
 
-const postEvento = require("../controllers/regEvento");
-const regTicket = require("../controllers/regTickets");
-const regChurch = require("../controllers/regChurch");
-const getEvents = require("../controllers/getEvento");
+const regTicket = require("../controllers/Tickets");
+const postChurch = require("../controllers/Church");
+const { getEvents, postEvento } = require("../controllers/Evento");
+const postPeople = require("../controllers/People");
 
-router.post("/evento", postEvento);
+router.post("/eventos", postEvento);
 router.post("/tickets", regTicket);
-router.post("/congregaciones", regChurch);
+router.post("/churches", postChurch);
+router.post("/people", postPeople);
 router.get("/eventos", getEvents);
 
 module.exports = router;
