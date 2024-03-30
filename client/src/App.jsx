@@ -8,6 +8,7 @@ import Church from "./component/form/Church";
 import Event from "./component/form/Event";
 import Ticket from "./component/form/Ticket";
 import People from "./component/form/People";
+import GetEvents from "./component/Tablas/GetEvents";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/congregaciones" element={<Church />} />
         <Route path="/tickets" element={<Ticket />} />
         <Route path="/eventos" element={<Event />} />
+        <Route path="/lista-eventos" element={<GetEvents />} />
         <Route path="/participantes" element={<People isModal={false} />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>

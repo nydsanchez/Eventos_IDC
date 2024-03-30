@@ -1,7 +1,7 @@
-import { ADD_EVENT, ADD_EVENT_FAILURE } from "./action_types";
+import { ADD_EVENT, GET_EVENT, EVENT_FAILURE } from "./action_types";
 
 const initialState = {
-  event: [],
+  events: [],
 };
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -11,8 +11,12 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         event: payload,
       };
-
-    case ADD_EVENT_FAILURE:
+    case GET_EVENT:
+      return {
+        ...state,
+        events: payload,
+      };
+    case EVENT_FAILURE:
       return {
         ...state,
         error: payload,

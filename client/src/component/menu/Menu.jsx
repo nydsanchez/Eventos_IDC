@@ -57,7 +57,7 @@ const Menu = () => {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/ver-eventos" className={styles.submenu}>
+                  <NavLink to="/lista-eventos" className={styles.submenu}>
                     Consultar Eventos
                   </NavLink>
                 </li>

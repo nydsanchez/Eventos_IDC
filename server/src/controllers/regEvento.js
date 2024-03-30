@@ -25,17 +25,25 @@ const postMeeting = async (req, res) => {
         return res.status(400).send("¡Este evento ya está registrado!");
       } else {
         // Si no existe un evento con los mismos detalles, crear un nuevo registro
-        const newEvent = await Event.create({
-          event_name: name,
-          event_type,
-          event_desc: description,
-          start_date,
-          end_date,
-          num_tickets: tickets,
-        });
+        if (start_date <= end_date && tickets > 0) {
+          const newEvent = await Event.create({
+            event_name: name,
+            event_type,
+            event_desc: description,
+            start_date,
+            end_date,
+            num_tickets: tickets,
+          });
 
-        // Devolver solo el nuevo evento agregado
-        return res.status(200).json(newEvent);
+          // Devolver solo el nuevo evento agregado
+          return res.status(200).json(newEvent);
+        } else {
+          return res
+            .status(400)
+            .send(
+              "La fecha de inicio no puede ser mayor que la fecha de finalizacion"
+            );
+        }
       }
     } else {
       // Si falta algún dato necesario, enviar un mensaje de error
