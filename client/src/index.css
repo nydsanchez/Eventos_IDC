@@ -54,4 +54,5 @@ body {
 .app > main {
   grid-area: main;
   margin: 3rem;
+  border: 1px solir red;
 }
