@@ -135,7 +135,7 @@ export default function People({ onClose, isModal }) {
               )}
             </div>
             <div>
-              <label htmlFor="phone">Nombre de teléfono/celular:</label>
+              <label htmlFor="phone">No. Teléfono/celular:</label>
               <input
                 type="text"
                 name="phone"
