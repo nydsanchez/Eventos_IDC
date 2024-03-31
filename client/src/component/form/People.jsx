@@ -1,8 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addData, getData } from "../../redux/actions";
-
-import Select from "../select/Select";
+import { addData } from "../../redux/actions";
 
 import validation from "../../assets/javascript/validation";
 import styles from "./form.module.css";
@@ -29,9 +27,9 @@ export default function People({ onClose, isModal }) {
   //  const error = useSelector((state) => state.error);
   const loading = useSelector((state) => state.loading);
 
-  useEffect(() => {
+  /*  useEffect(() => {
     dispatch(getData("churches"));
-  }, [dispatch]);
+  }, [dispatch]); */
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -172,15 +170,15 @@ export default function People({ onClose, isModal }) {
             <div>
               <label htmlFor="ChurchId">Congregación:</label>
 
-              <Select
+              <select
                 name="ChurchId"
-                id="ChurchId"
-                value={newData.ChurchId}
+                id="ChurdId"
+                value={newData.genre}
                 onChange={handleChange}
-                idKey="id"
-                nameKey="church_name"
-                entityType="churches"
-              />
+              >
+                <option value="">Selecciona una opcion</option>
+                <option value="1">nada</option>
+              </select>
 
               {errors.e1 ? (
                 <p className={styles.error_msg}>{errors.e1}</p>

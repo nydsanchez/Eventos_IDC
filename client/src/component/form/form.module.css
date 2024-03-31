@@ -18,19 +18,19 @@
 
 .grid_container_imgChurch {
   background-image: linear-gradient(to right bottom, #004c9c4d, #00285a4d),
-    url("../../../public/church-ver2.jpg");
+    url("/church-ver2.jpg");
   background-size: cover;
   background-position: top center;
 }
 .grid_container_imgTicket {
   background-image: linear-gradient(to right bottom, #004c9c4d, #00285a4d),
-    url("../../../public/church-ver2.jpg");
+    url("/church-ver2.jpg");
   background-size: cover;
   background-position: top center;
 }
 .grid_container_imgPeople {
   background-image: linear-gradient(to right bottom, #004c9c4d, #00285a4d),
-    url("../../../public/church-ver2.jpg");
+    url("/church-ver2.jpg");
   background-size: cover;
   background-position: top center;
 }
