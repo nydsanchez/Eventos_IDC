@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addData } from "../../redux/actions";
 import DatePicker from "react-datepicker";
@@ -19,14 +19,14 @@ export default function Event() {
   const [errors, setErrors] = useState({});
 
   const dispatch = useDispatch();
-  const error = useSelector((state) => state.error);
+  //const error = useSelector((state) => state.error);
   const loading = useSelector((state) => state.loading);
 
-  useEffect(() => {
+  /*  useEffect(() => {
     if (error) {
       alert(error);
     }
-  }, [error]);
+  }, [error]); */
 
   const handleChange = (e) => {
     const { name, value } = e.target;
