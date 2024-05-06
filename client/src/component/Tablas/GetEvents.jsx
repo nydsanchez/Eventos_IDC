@@ -7,6 +7,7 @@ import styles from "./tablas.module.css";
 function GetEvents() {
   const dispatch = useDispatch();
   const eventos = useSelector((state) => state.data.eventos);
+  const error = useSelector((state) => state.error.message);
 
   const handleEdit = (index) => {
     // Lógica para editar el elemento con el índice proporcionado
@@ -22,10 +23,15 @@ function GetEvents() {
     // Lógica para eliminar el elemento con el índice proporcionado
     console.log("Delete item at index:", index);
   };
-  console.log(eventos);
+
   useEffect(() => {
-    dispatch(getData("eventos"));
+    if (error) {
+      alert(error);
+    } else {
+      dispatch(getData("eventos"));
+    }
   }, [dispatch]);
+
   return (
     <main>
       <h2 className={styles.subtitle}>Lista de Eventos</h2>

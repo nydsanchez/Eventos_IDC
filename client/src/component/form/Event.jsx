@@ -19,7 +19,7 @@ export default function Event() {
   const [errors, setErrors] = useState({});
 
   const dispatch = useDispatch();
-  //const error = useSelector((state) => state.error);
+  const error = useSelector((state) => state.error);
   const loading = useSelector((state) => state.loading);
 
   /*  useEffect(() => {
@@ -172,6 +172,7 @@ export default function Event() {
             </button>
           </form>
         </div>
+        if (error) {alert(error)}
       </div>
     </main>
   );
