@@ -38,48 +38,81 @@ module.exports = (sequelize) => {
       },
       logoUrl: {
         type: DataTypes.STRING,
-        allowNull: false,
+
+        validate: {
+          isUrl: true, // Validación de URL
+        },
       },
 
       mail: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          isEmail: true, // Validación de correo electrónico
+        },
       },
       fb_url: {
         type: DataTypes.STRING,
-        allowNull: false,
+
+        validate: {
+          isUrl: true, // Validación de URL
+        },
       },
       instagram_url: {
         type: DataTypes.STRING,
-        allowNull: false,
+
+        validate: {
+          isUrl: true, // Validación de URL
+        },
       },
       twitter_url: {
         type: DataTypes.STRING,
-        allowNull: false,
+
+        validate: {
+          isUrl: true, // Validación de URL
+        },
       },
       primary_color: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          is: /^#[0-9A-Fa-f]+$/, // Expresión regular para validar un número hexadecimal con "#" al inicio
+        },
       },
       secundary_color: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          is: /^#[0-9A-Fa-f]+$/, // Expresión regular para validar un número hexadecimal con "#" al inicio
+        },
       },
       header_background_color: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          is: /^#[0-9A-Fa-f]+$/, // Expresión regular para validar un número hexadecimal con "#" al inicio
+        },
       },
       footer_background_color: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          is: /^#[0-9A-Fa-f]+$/, // Expresión regular para validar un número hexadecimal con "#" al inicio
+        },
       },
       button_background_color: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          is: /^#[0-9A-Fa-f]+$/, // Expresión regular para validar un número hexadecimal con "#" al inicio
+        },
       },
       button_text_color: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          is: /^#[0-9A-Fa-f]+$/, // Expresión regular para validar un número hexadecimal con "#" al inicio
+        },
       },
     },
 
