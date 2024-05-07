@@ -1,7 +1,13 @@
 const router = require("express").Router();
 
 const regTicket = require("../controllers/Tickets");
-const { getChurches, postChurch } = require("../controllers/Church");
+const {
+  getAllChurches,
+  postChurch,
+  getChurch,
+  editChurch,
+  deleteChurch,
+} = require("../controllers/Church");
 const {
   getAllEvents,
   postEvento,
@@ -27,10 +33,10 @@ router.delete("/tickets/:eventId/:idTicket", fn);*/
 
 //Gestión de Iglesias
 router.post("/churches", postChurch);
-router.get("/churches", getChurches);
-/*router.get("/churches/:id", getChurches);
-router.put("/churches/:id", getChurches);
-router.delete("/churches/:id", getChurches);*/
+router.get("/churches", getAllChurches);
+router.get("/churches/:id", getChurch);
+router.put("/churches/:id", editChurch);
+router.delete("/churches/:id", deleteChurch);
 
 //Gestión de Personas
 router.post("/people", postPeople);
