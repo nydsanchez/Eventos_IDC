@@ -1,7 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 
-import Header from "./component/header/Header";
-import Menu from "./component/menu/Menu";
 import Dashboard from "./component/dashboard/Dashboard";
 import PageNotFound from "./page/notFound/PageNotFound";
 import Church from "./component/form/Church";
@@ -12,19 +10,16 @@ import GetEvents from "./component/Tablas/GetEvents";
 
 function App() {
   return (
-    <div className={"app"}>
-      <Header />
-      <Menu />
-      <Routes>
-        <Route path="/home" element={<Dashboard />} />
-        <Route path="/congregaciones" element={<Church />} />
-        <Route path="/tickets" element={<Ticket />} />
-        <Route path="/eventos" element={<Event />} />
-        <Route path="/lista-eventos" element={<GetEvents />} />
-        <Route path="/participantes" element={<People isModal={false} />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/home" element={<GetEvents />} />
+      <Route path="/congregaciones" element={<Church />} />
+      <Route path="/tickets" element={<Ticket />} />
+      <Route path="/eventos" element={<Event />} />
+      <Route path="/evento" element={<Dashboard />} />
+
+      <Route path="/participantes" element={<People isModal={false} />} />
+      <Route path="*" element={<PageNotFound />} />
+    </Routes>
   );
 }
 

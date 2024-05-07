@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addDataEvent } from "../../redux/actions";
-
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import validation from "../../assets/javascript/validation";
 import styles from "./form.module.css";
 
 export default function Event() {
@@ -16,21 +16,45 @@ export default function Event() {
     tickets: 0,
     description: "",
   });
+  const [errors, setErrors] = useState({});
 
   const dispatch = useDispatch();
+  const error = useSelector((state) => state.error);
+  const loading = useSelector((state) => state.loading);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewData({ ...newData, [name]: value });
+
+    const updatedErrors = validation({ ...newData, [name]: value });
+    setErrors(updatedErrors);
   };
 
   const handleDateChange = (date, field) => {
     setNewData({ ...newData, [field]: date });
+    const updatedErrors = validation({ ...newData, [field]: date });
+    setErrors(updatedErrors);
   };
+  function delete_formData() {
+    setNewData({
+      name: "",
+      event_type: "",
+      start_date: null,
+      end_date: null,
+      tickets: 0,
+      description: "",
+    });
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(addDataEvent(newData));
+    delete_formData();
   };
+
+  function handleClearData() {
+    delete_formData();
+  }
 
   return (
     <main>
@@ -52,6 +76,12 @@ export default function Event() {
                 value={newData.name}
                 onChange={handleChange}
               />
+
+              {errors.e1 ? (
+                <p className={styles.error_msg}>{errors.e1}</p>
+              ) : (
+                <p>&nbsp;</p>
+              )}
             </div>
 
             <div>
@@ -74,6 +104,11 @@ export default function Event() {
                 <option value="Confraternidad">Confraternidad</option>
                 <option value="Otro">Otro</option>
               </select>
+              {errors.e2 ? (
+                <p className={styles.error_msg}>{errors.e2}</p>
+              ) : (
+                <p>&nbsp;</p>
+              )}
             </div>
 
             <div>
@@ -84,6 +119,7 @@ export default function Event() {
                 onChange={(date) => handleDateChange(date, "start_date")}
                 dateFormat="dd/MM/yyyy"
               />
+              {errors.e3 && <p className={styles.error_msg}>{errors.e3}</p>}
             </div>
             <div>
               <label htmlFor="end_date">Fecha de finalización:</label>
@@ -93,6 +129,7 @@ export default function Event() {
                 onChange={(date) => handleDateChange(date, "end_date")}
                 dateFormat="dd/MM/yyyy"
               />
+              {errors.e4 && <p className={styles.error_msg}>{errors.e4}</p>}
             </div>
 
             <div>
@@ -117,9 +154,19 @@ export default function Event() {
               ></textarea>
             </div>
 
-            <button className={styles.btn_form}>Registrar</button>
+            <button className={styles.btn_form} disabled={loading}>
+              {loading ? "Enviando..." : "Registrar"}
+            </button>
+            <button
+              className={styles.btn_form}
+              onClick={handleClearData}
+              disabled={loading}
+            >
+              Limpiar datos
+            </button>
           </form>
         </div>
+        if (error) {alert(error)}
       </div>
     </main>
   );

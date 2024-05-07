@@ -1,10 +1,4 @@
-import {
-  ADD_DATA,
-  GET_DATA,
-  UPDATE_DATA,
-  DATA_SUCCESS,
-  DATA_FAILURE,
-} from "./action_types";
+import { ADD_DATA_EVENT, GET_DATA_EVENT } from "./action_types";
 
 const initialState = {
   data: {
@@ -20,83 +14,32 @@ const initialState = {
   loading: false,
 };
 
-const reducer = (state = initialState, { type, payload, success }) => {
+const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case GET_DATA:
-      return {
-        ...state,
-        loading: true,
-        error: null,
-      };
-
-    case ADD_DATA: {
-      if (success) {
-        const { entity, data } = payload;
-        return {
-          ...state,
-          data: {
-            ...state.data,
-            [entity]: [...state.data[entity], data], // Agrega el nuevo dato al final del array existente
-          },
-          loading: false,
-          success: true,
-          error: null,
-        };
-      } else {
-        return {
-          ...state,
-          loading: false,
-          success: false,
-          error: payload,
-        };
-      }
-    }
-
-    case UPDATE_DATA:
-      if (success) {
-        const { entity, data } = payload;
-        return {
-          ...state,
-          data: {
-            ...state.data,
-            [entity]: state.data[entity].map((item) =>
-              item.id === data.id ? data : item
-            ),
-          },
-          loading: false,
-          success: true,
-          error: null,
-        };
-      } else {
-        return {
-          ...state,
-          loading: false,
-          success: false,
-          error: payload,
-        };
-      }
-
-    case DATA_SUCCESS: {
-      const { entity, data } = payload;
+    case GET_DATA_EVENT: {
       return {
         ...state,
         data: {
           ...state.data,
-          [entity]: data,
+          eventos: payload,
+        },
+        loading: false,
+        error: null,
+      };
+    }
+    case ADD_DATA_EVENT: {
+      const { data } = payload;
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          eventos: [...state.data.eventos, data], // Agrega el nuevo dato al final del array existente
         },
         loading: false,
         success: true,
         error: null,
       };
     }
-
-    case DATA_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        success: false,
-        error: payload,
-      };
 
     default:
       return state;

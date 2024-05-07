@@ -1,57 +1,30 @@
 import axios from "axios";
-import {
-  GET_DATA,
-  ADD_DATA,
-  UPDATE_DATA,
-  DATA_SUCCESS,
-  DATA_FAILURE,
-} from "./action_types";
+import { GET_DATA_EVENT, ADD_DATA_EVENT, UPDATE_DATA } from "./action_types";
 
 const URL = "http://localhost:4000";
 
-export const addData = (entity, newData) => {
-  return async (dispatch) => {
-    try {
-      const response = await axios.post(`${URL}/${entity}`, newData);
-      return dispatch({
-        type: ADD_DATA,
-        payload: { entity, data: response.data },
-        success: true,
-      });
-    } catch (error) {
-      const errorMessage = error.response
-        ? error.response.data
-        : "Error al agregar los datos";
-      dispatch({
-        type: DATA_FAILURE,
-        payload: errorMessage,
-        success: false,
-      });
-    }
-  };
+export const addDataEvent = (newData) => async (dispatch) => {
+  try {
+    const { data } = await axios.post(`${URL}/eventos`, newData);
+    return dispatch({
+      type: ADD_DATA_EVENT,
+      payload: data,
+    });
+  } catch (error) {
+    console.warn(error);
+  }
 };
 
-export const getData = (entity) => {
-  return async (dispatch) => {
-    dispatch({ type: GET_DATA });
-    try {
-      const response = await axios.get(`${URL}/${entity}`);
-      dispatch({
-        type: DATA_SUCCESS,
-        payload: { entity, data: response.data },
-        success: true,
-      });
-    } catch (error) {
-      const errorMessage = error.response
-        ? error.response.data
-        : "Error al cargar los datos";
-      dispatch({
-        type: DATA_FAILURE,
-        payload: errorMessage,
-        success: false,
-      });
-    }
-  };
+export const getDataEvent = () => async (dispatch) => {
+  try {
+    const { data } = await axios.get(`${URL}/eventos`);
+    dispatch({
+      type: GET_DATA_EVENT,
+      payload: data,
+    });
+  } catch (error) {
+    console.warn(error);
+  }
 };
 
 export const updateData = (entity, newData) => {
@@ -67,14 +40,7 @@ export const updateData = (entity, newData) => {
         success: true,
       });
     } catch (error) {
-      const errorMessage = error.response
-        ? error.response.data
-        : "Error al actualizar los datos";
-      dispatch({
-        type: DATA_FAILURE,
-        payload: errorMessage,
-        success: false,
-      });
+      console.warn(error);
     }
   };
 };

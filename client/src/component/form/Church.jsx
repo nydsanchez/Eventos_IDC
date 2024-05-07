@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addData } from "../../redux/actions";
+import { addDataEvent } from "../../redux/actions";
 
 import validation from "../../assets/javascript/validation";
 import styles from "./form.module.css";
@@ -43,7 +43,7 @@ export default function Church() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addData("churches", newData));
+    dispatch(addDataEvent(newData));
     delete_formData();
   };
 

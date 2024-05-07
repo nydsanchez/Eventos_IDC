@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addData } from "../../redux/actions";
+import { addDataEvent } from "../../redux/actions";
 
 import validation from "../../assets/javascript/validation";
 import styles from "./form.module.css";
@@ -52,7 +52,7 @@ export default function People({ onClose, isModal }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addData("people", newData));
+    dispatch(addDataEvent(newData));
     if (isModal) {
       onClose(); // Cierra la modal al enviar el formulario
     }

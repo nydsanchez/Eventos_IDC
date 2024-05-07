@@ -1,10 +1,10 @@
-const { Event } = require("../db");
+const { Events } = require("../db");
 
 const getEvents = async (req, res) => {
   try {
-    const count = await Event.count();
+    const count = await Events.count();
     if (count !== 0) {
-      const allEvents = await Event.findAll();
+      const allEvents = await Events.findAll();
       console.log(allEvents);
       return res.status(200).json(allEvents);
     } else {
@@ -30,7 +30,7 @@ const postEvento = async (req, res) => {
       end_date &&
       tickets
     ) {
-      const existingEvent = await Event.findOne({
+      const existingEvent = await Events.findOne({
         where: {
           event_name: name,
           start_date,
@@ -43,7 +43,7 @@ const postEvento = async (req, res) => {
       } else {
         // Si no existe un evento con los mismos detalles, crear un nuevo registro
         if (start_date <= end_date && tickets > 0) {
-          const newEvent = await Event.create({
+          const newEvent = await Events.create({
             event_name: name,
             event_type,
             event_desc: description,

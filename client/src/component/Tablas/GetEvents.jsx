@@ -1,13 +1,16 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getData } from "../../redux/actions";
+import { getDataEvent } from "../../redux/actions";
 import { FaPencil, FaEye, FaEraser } from "react-icons/fa6";
+
+import Header from "../header/Header";
+import Menu from "../menu/Menu";
+
 import styles from "./tablas.module.css";
 
 function GetEvents() {
   const dispatch = useDispatch();
   const eventos = useSelector((state) => state.data.eventos);
-  const error = useSelector((state) => state.error.message);
 
   const handleEdit = (index) => {
     // Lógica para editar el elemento con el índice proporcionado
@@ -25,17 +28,18 @@ function GetEvents() {
   };
 
   useEffect(() => {
-    if (error) {
-      alert(error);
-    } else {
-      dispatch(getData("eventos"));
-    }
+    dispatch(getDataEvent()); // Asegúrate de invocar getDataEvent como función
   }, [dispatch]);
 
   return (
-    <main>
-      <h2 className={styles.subtitle}>Lista de Eventos</h2>
-      <div className={styles.container}>
+    <div className="app">
+      <Header />
+      <Menu />
+      <main className={styles.container}>
+        <div className={styles.pageHeader}>
+          <h2 className={styles.subtitle}>Lista de Eventos</h2>
+          <button>➕ Agregar evento</button>
+        </div>
         <table className={styles.table}>
           <thead>
             <tr>
@@ -74,8 +78,8 @@ function GetEvents() {
             ))}
           </tbody>
         </table>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
 
