@@ -6,16 +6,17 @@ module.exports = (sequelize) => {
   sequelize.define(
     "Tickets",
     {
-      id_ticket: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-      },
       id_event: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true, // Marcar como clave primaria
       },
+      id_ticket: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+      },
+
       vendedor: {
         type: DataTypes.STRING,
         allowNull: false,
