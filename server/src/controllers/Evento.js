@@ -1,4 +1,4 @@
-const { Events, Attendance, People } = require("../db");
+const { Events } = require("../db");
 
 const getAllEvents = async (req, res) => {
   try {
@@ -122,6 +122,21 @@ const editEvent = async (req, res) => {
       .send({ message: "Error al actualizar el evento", error: error.message });
   }
 };
-const deleteEvent = async (req, res) => {};
+const deleteEvent = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const event = await Events.findByPk(id);
+    if (!event) {
+      return res.status(404).send({ message: "Evento no encontrado" });
+    }
+
+    await event.destroy();
+    return res.status(200).send({ message: "Evento eliminado" });
+  } catch (error) {
+    return res
+      .status(500)
+      .send({ message: "Error al eliminar el evento", error: error.message });
+  }
+};
 
 module.exports = { getAllEvents, postEvento, getEvent, editEvent, deleteEvent };

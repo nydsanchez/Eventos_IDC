@@ -1,4 +1,4 @@
-const { Tickets, People, Event } = require("../db");
+const { Tickets, People, Events } = require("../db");
 
 const regTicket = async (req, res) => {
   try {
@@ -25,7 +25,7 @@ const regTicket = async (req, res) => {
     ) {
       console.log("Recibidos todos los datos");
 
-      const evento = await Event.findByPk(Number(id_event));
+      const evento = await Events.findByPk(Number(id_event));
       if (!evento) {
         return res.status(404).json({ error: "Evento no encontrado" });
       }
