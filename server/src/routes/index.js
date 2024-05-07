@@ -2,15 +2,21 @@ const router = require("express").Router();
 
 const regTicket = require("../controllers/Tickets");
 const { getChurches, postChurch } = require("../controllers/Church");
-const { getEvents, postEvento } = require("../controllers/Evento");
+const {
+  getAllEvents,
+  postEvento,
+  getEvent,
+  editEvent,
+  deleteEvent,
+} = require("../controllers/Evento");
 const postPeople = require("../controllers/People");
 
 //Gestión de Eventos
 router.post("/eventos", postEvento);
-router.get("/eventos", getEvents);
-/*router.get("/eventos/:id", fn);
-router.put("/eventos/:id", fn);
-router.delete("/eventos/:id", fn);*/
+router.get("/eventos", getAllEvents);
+router.get("/eventos/:id", getEvent);
+router.put("/eventos/:id", editEvent);
+router.delete("/eventos/:id", deleteEvent);
 
 //Gestión de Tickets
 router.post("/eventos/:eventId/tickets", regTicket);
@@ -40,10 +46,8 @@ router.delete("/people/:id", getPeople); */
 //Rifas en Eventos
 //router.get("/eventos/{eventId}/raffle", fn);
 
-/* Gestión de Tickets
-GET /tickets/{ticketId}: Obtener detalles de un ticket específico.
-PUT /tickets/{ticketId}: Actualizar un ticket.
-DELETE /tickets/{ticketId}: Eliminar un ticket.
+/* DASHBOARD DE UN EVENTO
+router.get("events/:eventId/dashboard", fn) 
 */
 
 module.exports = router;
