@@ -4,7 +4,7 @@ import { getDataEvent } from "../../redux/actions";
 import { FaPencil, FaEye, FaEraser } from "react-icons/fa6";
 
 import Header from "../header/Header";
-import Menu from "../menu/Menu";
+import Menu from "../menu/MenuGlobal";
 
 import styles from "./tablas.module.css";
 

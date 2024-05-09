@@ -13,10 +13,10 @@ function App() {
     <Routes>
       <Route path="/home" element={<GetEvents />} />
       <Route path="/congregaciones" element={<Church />} />
-      <Route path="/tickets" element={<Ticket />} />
-      <Route path="/eventos" element={<Event />} />
-      <Route path="/evento" element={<Dashboard />} />
 
+      <Route path="/eventos" element={<Event />} />
+      <Route path="/eventos/dashboard" element={<Dashboard />} />
+      <Route path="/tickets" element={<Ticket />} />
       <Route path="/participantes" element={<People isModal={false} />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>

@@ -37,7 +37,7 @@ const Menu = () => {
               }`}
               onClick={() => handleToggle(6)}
             >
-              <NavLink to="/home">Dashboard</NavLink>
+              <NavLink to="/eventos/dashboard">Dashboard</NavLink>
             </div>
           </li>
           <li>
@@ -52,42 +52,14 @@ const Menu = () => {
             {expandedMenu === 1 && (
               <ul className={styles.box_option}>
                 <li>
-                  <NavLink to="/eventos" className={styles.submenu}>
-                    Configurar Evento
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/lista-eventos" className={styles.submenu}>
+                  <NavLink to="/eventos/detalle" className={styles.submenu}>
                     Consultar Eventos
                   </NavLink>
                 </li>
               </ul>
             )}
           </li>
-          <li>
-            <div
-              className={`${styles.menu} ${
-                expandedMenu === 2 && styles.menu_active
-              }`}
-              onClick={() => handleToggle(2)}
-            >
-              Congregaciones
-            </div>
-            {expandedMenu === 2 && (
-              <ul>
-                <li className={styles.box_option}>
-                  <NavLink to="/congregaciones" className={styles.submenu}>
-                    Nueva Congregación
-                  </NavLink>
-                </li>
-                <li className={styles.box_option}>
-                  <NavLink to="/allchurch" className={styles.submenu}>
-                    Ver Congregaciones
-                  </NavLink>
-                </li>
-              </ul>
-            )}
-          </li>
+
           <li>
             <div
               className={`${styles.menu} ${
@@ -100,7 +72,7 @@ const Menu = () => {
             {expandedMenu === 3 && (
               <ul>
                 <li className={styles.box_option}>
-                  <NavLink to="/tickets" className={styles.submenu}>
+                  <NavLink to="/eventos/tickets" className={styles.submenu}>
                     Registro de Ticket
                   </NavLink>
                 </li>
@@ -112,25 +84,7 @@ const Menu = () => {
               </ul>
             )}
           </li>
-          <li>
-            <div
-              className={`${styles.menu} ${
-                expandedMenu === 4 && styles.menu_active
-              }`}
-              onClick={() => handleToggle(4)}
-            >
-              Personas
-            </div>
-            {expandedMenu === 4 && (
-              <ul>
-                <li className={styles.box_option}>
-                  <NavLink to="/participantes" className={styles.submenu}>
-                    Agregar Personas
-                  </NavLink>
-                </li>
-              </ul>
-            )}
-          </li>
+
           <li>
             <div
               className={`${styles.menu} ${
@@ -143,13 +97,16 @@ const Menu = () => {
             {expandedMenu === 5 && (
               <ul>
                 <li className={styles.box_option}>
-                  <NavLink to="/asistencia" className={styles.submenu}>
+                  <NavLink
+                    to="/eventos/registro-asistencia"
+                    className={styles.submenu}
+                  >
                     Registro de Asistencia
                   </NavLink>
                 </li>
                 <li className={styles.box_option}>
                   <NavLink
-                    to="/consultar-asistencia"
+                    to="/eventos/consultar-asistencia"
                     className={styles.submenu}
                   >
                     Consultar Asistencia
