@@ -15,7 +15,13 @@ const {
   editEvent,
   deleteEvent,
 } = require("../controllers/Evento");
-const postPeople = require("../controllers/People");
+const {
+  postPeople,
+  getAllPeople,
+  getPerson,
+  editPerson,
+  deletePerson,
+} = require("../controllers/People");
 
 //Gestión de Eventos
 router.post("/eventos", postEvento);
@@ -23,13 +29,6 @@ router.get("/eventos", getAllEvents);
 router.get("/eventos/:id", getEvent);
 router.put("/eventos/:id", editEvent);
 router.delete("/eventos/:id", deleteEvent);
-
-//Gestión de Tickets
-router.post("/eventos/:eventId/tickets", regTicket);
-/*router.get("/eventos/:eventId/tickets", fn);
-router.get("/tickets/:eventId/:idTicket", fn);
-router.put("/tickets/:eventId/:idTicket", fn);
-router.delete("/tickets/:eventId/:idTicket", fn);*/
 
 //Gestión de Iglesias
 router.post("/churches", postChurch);
@@ -40,10 +39,17 @@ router.delete("/churches/:id", deleteChurch);
 
 //Gestión de Personas
 router.post("/people", postPeople);
-/* router.get("/people", getPeople);
-router.get("/people/:id", getPeople);
-router.put("/people/:id", getPeople);
-router.delete("/people/:id", getPeople); */
+router.get("/people", getAllPeople);
+router.put("/people/:id", editPerson);
+router.get("/people/:id", getPerson);
+router.delete("/people/:id", deletePerson);
+
+//Gestión de Tickets
+router.post("/eventos/:eventId/tickets", regTicket);
+/*router.get("/eventos/:eventId/tickets", fn);
+router.get("/tickets/:eventId/:idTicket", fn);
+router.put("/tickets/:eventId/:idTicket", fn);
+router.delete("/tickets/:eventId/:idTicket", fn);*/
 
 //Registro y Verificación de Asistencia
 //router.post("/tickets/:eventId/attend", fn); //Marcar asistencia para un ticket usando el número del ticket (desde la pistola lectora de código de barras).

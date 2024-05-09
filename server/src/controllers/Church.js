@@ -66,25 +66,31 @@ const getChurch = async (req, res) => {
 };
 
 const editChurch = async (req, res) => {
+  const { id } = req.params;
+  const { name, state, address, phone } = req.body;
+
   try {
-    const { id } = req.params;
     const churchEdit = await Churches.findByPk(id);
 
     if (!churchEdit) {
       return res.status(404).send({ message: "Congregacion no encontrada" });
     }
-    const { name, state, address, phone } = req.body;
 
-    const updatedChurch = await churchEdit.update({
-      church_name: name,
-      church_state: state,
-      church_address: address,
-      church_phone: phone,
-    });
+    churchEdit.church_name = name;
+    churchEdit.church_state = state;
+    churchEdit.church_address = address;
+    churchEdit.church_phone = phone;
 
-    return res.status(200).json(updatedChurch);
+    if (churchEdit.changed()) {
+      const updatedChurch = await churchEdit.save();
+      return res.status(200).json(updatedChurch);
+    } else {
+      return res.status(200).json({
+        message: "No hubo cambios para actualizar los datos de la congregacion",
+      });
+    }
   } catch (error) {
-    console.error("Error al registrar la iglesia:", error);
+    console.error("Error al modificar los datos de la congregacion:", error);
     return res.status(500).send("Error interno del servidor");
   }
 };
@@ -101,12 +107,10 @@ const deleteChurch = async (req, res) => {
 
     return res.status(200).send({ message: "Congregación eliminada" });
   } catch (error) {
-    return res
-      .status(500)
-      .send({
-        message: "Error al eliminar la congregacion",
-        error: error.message,
-      });
+    return res.status(500).send({
+      message: "Error al eliminar la congregacion",
+      error: error.message,
+    });
   }
 };
 module.exports = {

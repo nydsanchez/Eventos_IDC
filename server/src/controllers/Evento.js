@@ -90,32 +90,38 @@ const getEvent = async (req, res) => {
 
 const editEvent = async (req, res) => {
   const { id } = req.params;
+  const {
+    name,
+    event_type,
+    description,
+    start_date,
+    end_date,
+    num_tickets,
+    event_state,
+  } = req.body;
+
   try {
     const event = await Events.findByPk(id);
     if (!event) {
       return res.status(404).send({ message: "Evento no encontrado" });
     }
 
-    const {
-      name,
-      event_type,
-      description,
-      start_date,
-      end_date,
-      num_tickets,
-      event_state,
-    } = req.body; // Asumiendo estos campos para el evento
-    const updatedEvent = await event.update({
-      event_name: name,
-      event_type,
-      event_desc: description,
-      start_date,
-      end_date,
-      num_tickets,
-      event_state,
-    });
+    (event.event_name = name),
+      (event.event_type = event_type),
+      (event.event_desc = description),
+      (event.start_date = start_date);
+    event.end_date = end_date;
+    event.num_tickets = num_tickets;
+    event.event_state = event_state;
 
-    return res.status(200).json(updatedEvent);
+    if (event.changed()) {
+      const updatedEvent = await event.save();
+      return res.status(200).json(updatedEvent);
+    } else {
+      return res.status(200).json({
+        message: "No hubo cambios para actualizar los datos del evento",
+      });
+    }
   } catch (error) {
     return res
       .status(500)
