@@ -4,7 +4,7 @@ import { getDataEvent } from "../../redux/actions";
 import { FaPencil, FaEye, FaEraser } from "react-icons/fa6";
 
 import Header from "../header/Header";
-import Menu from "../menu/MenuGlobal";
+import MenuGlobal from "../menu/MenuGlobal";
 
 import styles from "./tablas.module.css";
 
@@ -34,7 +34,7 @@ function GetEvents() {
   return (
     <div className="app">
       <Header />
-      <Menu />
+      <MenuGlobal />
       <main className={styles.container}>
         <div className={styles.pageHeader}>
           <h2 className={styles.subtitle}>Lista de Eventos</h2>
