@@ -37,37 +37,13 @@ const Menu = () => {
               }`}
               onClick={() => handleToggle(1)}
             >
-              Evento
-            </div>
-            {expandedMenu === 1 && (
-              <ul className={styles.box_option}>
-                <li>
-                  <NavLink to="/eventos" className={styles.submenu}>
-                    Agregar Evento
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/lista-eventos" className={styles.submenu}>
-                    Consultar Eventos
-                  </NavLink>
-                </li>
-              </ul>
-            )}
-          </li>
-          <li>
-            <div
-              className={`${styles.menu} ${
-                expandedMenu === 2 && styles.menu_active
-              }`}
-              onClick={() => handleToggle(2)}
-            >
               Congregaciones
             </div>
-            {expandedMenu === 2 && (
+            {expandedMenu === 1 && (
               <ul>
                 <li className={styles.box_option}>
                   <NavLink to="/congregaciones" className={styles.submenu}>
-                    Nueva Congregación
+                    Agregar Congregación
                   </NavLink>
                 </li>
                 <li className={styles.box_option}>
@@ -81,13 +57,13 @@ const Menu = () => {
           <li>
             <div
               className={`${styles.menu} ${
-                expandedMenu === 4 && styles.menu_active
+                expandedMenu === 2 && styles.menu_active
               }`}
-              onClick={() => handleToggle(4)}
+              onClick={() => handleToggle(2)}
             >
               Personas
             </div>
-            {expandedMenu === 4 && (
+            {expandedMenu === 2 && (
               <ul>
                 <li className={styles.box_option}>
                   <NavLink to="/participantes" className={styles.submenu}>
@@ -101,13 +77,13 @@ const Menu = () => {
           <li>
             <div
               className={`${styles.menu} ${
-                expandedMenu === 4 && styles.menu_active
+                expandedMenu === 3 && styles.menu_active
               }`}
-              onClick={() => handleToggle(4)}
+              onClick={() => handleToggle(3)}
             >
               Configuración
             </div>
-            {expandedMenu === 4 && (
+            {expandedMenu === 3 && (
               <ul>
                 <li className={styles.box_option}>
                   <NavLink

@@ -11,9 +11,9 @@ import GetEvents from "./component/Tablas/GetEvents";
 function App() {
   return (
     <Routes>
-      <Route path="/home" element={<GetEvents />} />
+      <Route path="/" element={<GetEvents />} />
       <Route path="/congregaciones" element={<Church />} />
-      <Route path="/eventos" element={<Event />} />
+      <Route path="/eventos/nuevo" element={<Event />} />
       <Route path="/eventos/dashboard" element={<Dashboard />} />
       <Route path="/tickets" element={<Ticket />} />
       <Route path="/participantes" element={<People isModal={false} />} />
