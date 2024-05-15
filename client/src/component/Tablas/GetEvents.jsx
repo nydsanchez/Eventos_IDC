@@ -54,6 +54,7 @@ function GetEvents() {
           <h2 className={styles.subtitle}>Lista de Eventos</h2>
           <button onClick={handleOpenModal}>➕ Agregar evento</button>
         </div>
+
         {loading ? ( // Mostrar un indicador de carga mientras se cargan los datos
           <p>Loading...</p>
         ) : (
@@ -104,7 +105,6 @@ function GetEvents() {
             )}
           </table>
         )}
-        ;
       </main>
       {showModal && (
         <div className={styles.modalMain}>

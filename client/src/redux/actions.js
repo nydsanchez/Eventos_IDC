@@ -5,13 +5,17 @@ const URL = "http://localhost:4000";
 
 export const addDataEvent = (newData) => async (dispatch) => {
   try {
+    // console.log("datos a agregar en el action :", newData);
     const { data } = await axios.post(`${URL}/eventos`, newData);
-    return dispatch({
+    // console.log("respuesta despues del axios: ", data);
+    dispatch({
       type: ADD_DATA_EVENT,
       payload: data,
     });
+    return data;
   } catch (error) {
-    console.warn(error);
+    console.warn("Error agregando evento:", error);
+    throw error;
   }
 };
 

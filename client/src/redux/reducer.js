@@ -15,6 +15,7 @@ const initialState = {
 };
 
 const reducer = (state = initialState, { type, payload }) => {
+  // console.log("Estado global antes de la acción:", state);
   switch (type) {
     case GET_DATA_EVENT: {
       return {
@@ -28,17 +29,25 @@ const reducer = (state = initialState, { type, payload }) => {
       };
     }
     case ADD_DATA_EVENT: {
-      const { data } = payload;
-      return {
+      // console.log(
+      //   "Payload de la acción ADD_DATA_EVENT en el reducer:",
+      //   payload
+      // );
+      const newState = {
         ...state,
         data: {
           ...state.data,
-          eventos: [...state.data.eventos, data], // Agrega el nuevo dato al final del array existente
+          eventos: [...state.data.eventos, payload], // Agrega el nuevo dato al final del array existente
         },
         loading: false,
         success: true,
         error: null,
       };
+      // console.log(
+      //   "Estado global después de la acción en el reducer:",
+      //   newState
+      // );
+      return newState;
     }
 
     default:

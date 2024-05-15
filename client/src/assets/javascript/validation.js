@@ -1,11 +1,11 @@
 export default function validation(data) {
   let errors = {};
 
-  if (data.name.trim() === "") {
+  if (data.event_name.trim() === "") {
     errors.e1 = "El nombre del evento es requerido";
   }
-  if (data.name.length < 20) {
-    errors.e1 = "El nombre del evento debe tener minimo 20 caracteres";
+  if (data.event_name.length < 10) {
+    errors.e1 = "El nombre del evento debe tener minimo 10 caracteres";
   }
 
   if (!data.event_type) {

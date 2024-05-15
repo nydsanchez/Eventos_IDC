@@ -18,11 +18,17 @@ const getAllEvents = async (req, res) => {
 
 const postEvento = async (req, res) => {
   try {
-    const { name, event_type, description, start_date, end_date, tickets } =
-      req.body;
+    const {
+      event_name,
+      event_type,
+      description,
+      start_date,
+      end_date,
+      tickets,
+    } = req.body;
 
     if (
-      name &&
+      event_name &&
       event_type &&
       description &&
       start_date &&
@@ -31,7 +37,7 @@ const postEvento = async (req, res) => {
     ) {
       const existingEvent = await Events.findOne({
         where: {
-          event_name: name,
+          event_name,
           start_date,
           end_date,
         },
@@ -43,7 +49,7 @@ const postEvento = async (req, res) => {
         // Si no existe un evento con los mismos detalles, crear un nuevo registro
         if (start_date <= end_date && tickets > 0) {
           const newEvent = await Events.create({
-            event_name: name,
+            event_name,
             event_type,
             event_desc: description,
             start_date,
@@ -51,7 +57,6 @@ const postEvento = async (req, res) => {
             num_tickets: tickets,
           });
 
-          // Devolver solo el nuevo evento agregado
           return res.status(200).json(newEvent);
         } else {
           return res
@@ -91,7 +96,7 @@ const getEvent = async (req, res) => {
 const editEvent = async (req, res) => {
   const { id } = req.params;
   const {
-    name,
+    event_name,
     event_type,
     description,
     start_date,
@@ -106,7 +111,7 @@ const editEvent = async (req, res) => {
       return res.status(404).send({ message: "Evento no encontrado" });
     }
 
-    (event.event_name = name),
+    (event.event_name = event_name),
       (event.event_type = event_type),
       (event.event_desc = description),
       (event.start_date = start_date);

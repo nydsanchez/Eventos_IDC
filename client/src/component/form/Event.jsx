@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addDataEvent } from "../../redux/actions";
-import PropTypes from "prop-types";
-
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import PropTypes from "prop-types";
+import validation from "../../assets/javascript/validation";
 import styles from "./form.module.css";
 
 export default function Event({ onClose }) {
@@ -14,28 +14,39 @@ export default function Event({ onClose }) {
   };
 
   const [newData, setNewData] = useState({
-    name: "",
+    event_name: "",
     event_type: "",
     start_date: null,
     end_date: null,
     tickets: 0,
     description: "",
   });
-
+  const [errors, setErrors] = useState({});
+  const loading = useSelector((state) => state.loading);
   const dispatch = useDispatch();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewData({ ...newData, [name]: value });
+
+    const updatedErrors = validation({ ...newData, [name]: value });
+    setErrors(updatedErrors);
   };
 
   const handleDateChange = (date, field) => {
     setNewData({ ...newData, [field]: date });
+    const updatedErrors = validation({ ...newData, [field]: date });
+    setErrors(updatedErrors);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(addDataEvent(newData));
     onClose();
+  };
+
+  const handleCancel = () => {
+    onClose(); // Cerramos la ventana modal al hacer clic en un botón de cancelar
   };
 
   return (
@@ -54,11 +65,16 @@ export default function Event({ onClose }) {
               <label htmlFor="name">Nombre del evento</label>
               <input
                 type="text"
-                name="name"
-                id="name"
-                value={newData.name}
+                name="event_name"
+                id="event_name"
+                value={newData.event_name}
                 onChange={handleChange}
               />
+              {errors.e1 ? (
+                <p className={styles.error_msg}>{errors.e1}</p>
+              ) : (
+                <p>&nbsp;</p>
+              )}
             </div>
 
             <div>
@@ -81,6 +97,11 @@ export default function Event({ onClose }) {
                 <option value="Confraternidad">Confraternidad</option>
                 <option value="Otro">Otro</option>
               </select>
+              {errors.e2 ? (
+                <p className={styles.error_msg}>{errors.e2}</p>
+              ) : (
+                <p>&nbsp;</p>
+              )}
             </div>
 
             <div>
@@ -91,6 +112,7 @@ export default function Event({ onClose }) {
                 onChange={(date) => handleDateChange(date, "start_date")}
                 dateFormat="dd/MM/yyyy"
               />
+              {errors.e3 && <p className={styles.error_msg}>{errors.e3}</p>}
             </div>
             <div>
               <label htmlFor="end_date">Fecha de finalización:</label>
@@ -100,6 +122,7 @@ export default function Event({ onClose }) {
                 onChange={(date) => handleDateChange(date, "end_date")}
                 dateFormat="dd/MM/yyyy"
               />
+              {errors.e4 && <p className={styles.error_msg}>{errors.e4}</p>}
             </div>
 
             <div>
@@ -111,6 +134,7 @@ export default function Event({ onClose }) {
                 value={newData.tickets}
                 onChange={handleChange}
               />
+              {errors.e5 && <p className={styles.error_msg}>{errors.e5}</p>}
             </div>
             <div className={styles.miembros_info_personal}>
               <label htmlFor="description">Descripción del evento:</label>
@@ -124,7 +148,16 @@ export default function Event({ onClose }) {
               ></textarea>
             </div>
 
-            <button className={styles.btn_form}>Registrar evento</button>
+            <button className={styles.btn_form} disabled={loading}>
+              {loading ? "Enviando..." : "Registrar"}
+            </button>
+            <button
+              className={styles.btn_form}
+              disabled={loading}
+              onClick={handleCancel}
+            >
+              Cancelar
+            </button>
           </form>
         </div>
       </div>
