@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addDataEvent } from "../../redux/actions";
+import PropTypes from "prop-types";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import styles from "./form.module.css";
 
-export default function Event() {
+export default function Event({ onClose }) {
+  Event.propTypes = {
+    onClose: PropTypes.func.isRequired, // onClose debe ser una función y es requerida
+  };
+
   const [newData, setNewData] = useState({
     name: "",
     event_type: "",
@@ -30,12 +35,14 @@ export default function Event() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(addDataEvent(newData));
+    onClose();
   };
 
   return (
-    <main>
-      <h2 className={styles.subtitle}>Eventos</h2>
-      <div className={styles.grid_container}>
+    <main className={styles.modalMain}>
+      <h2 className={styles.subtitleModal}>Eventos</h2>
+
+      <div className={styles.modalContent}>
         <div className={styles.grid_container_text}>
           <h3>Registro de Eventos</h3>
           <p>
@@ -117,7 +124,7 @@ export default function Event() {
               ></textarea>
             </div>
 
-            <button className={styles.btn_form}>Registrar</button>
+            <button className={styles.btn_form}>Registrar evento</button>
           </form>
         </div>
       </div>
