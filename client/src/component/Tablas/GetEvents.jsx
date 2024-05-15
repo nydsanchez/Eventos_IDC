@@ -15,6 +15,7 @@ function GetEvents() {
 
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -31,18 +32,14 @@ function GetEvents() {
 
   const handleViewDetails = (index) => {
     // Lógica para ver más detalles del elemento con el índice proporcionado
-    console.log("View details of item at index:", index);
+    setSelectedEvent(eventos[index]);
   };
 
   const handleDelete = (index) => {
-    // Lógica para eliminar el elemento con el índice proporcionado
-    console.log("Delete item at index:", index);
-
     const confirmed = window.confirm(
       "¿Estás seguro de que deseas eliminar este evento?"
     );
     if (confirmed) {
-      // Envía una acción de Redux para eliminar el evento del estado global
       dispatch(deleteEvent(eventos[index].id_event));
     }
   };
@@ -62,57 +59,65 @@ function GetEvents() {
           <h2 className={styles.subtitle}>Lista de Eventos</h2>
           <button onClick={handleOpenModal}>➕ Agregar evento</button>
         </div>
-
-        {loading ? ( // Mostrar un indicador de carga mientras se cargan los datos
-          <p>Loading...</p>
-        ) : (
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th scope="col">Nombre</th>
-
-                <th scope="col">Tipo de evento</th>
-                <th scope="col">Fecha de inicio</th>
-                <th scope="col">Fecha de finalizacion</th>
-
-                <th scope="col">Estado del evento</th>
-                <th scope="col">Acciones</th>
-              </tr>
-            </thead>
-            {eventos && eventos.length > 0 ? (
-              <tbody>
-                {eventos.map((evento, index) => (
-                  <tr key={index}>
-                    <td>{evento.event_name}</td>
-                    <td>{evento.event_type}</td>
-
-                    <td>{evento.start_date}</td>
-                    <td>{evento.end_date}</td>
-
-                    <td>{evento.event_state}</td>
-                    <td className={styles.actions}>
-                      <button onClick={() => handleEdit(index)}>
-                        <FaPencil className={styles.icon_mobile} />
-                      </button>
-                      <button onClick={() => handleViewDetails(index)}>
-                        <FaEye className={styles.icon_mobile} />
-                      </button>
-                      <button onClick={() => handleDelete(index)}>
-                        <FaEraser className={styles.icon_mobile} />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            ) : (
-              <tbody>
+        <div className={styles.grid_container_2col}>
+          {loading ? ( // Mostrar un indicador de carga mientras se cargan los datos
+            <p>Loading...</p>
+          ) : (
+            <table className={styles.table}>
+              <thead>
                 <tr>
-                  <td colSpan="6">No hay eventos disponibles.</td>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Fecha de inicio</th>
+
+                  <th scope="col">Acciones</th>
                 </tr>
-              </tbody>
+              </thead>
+              {eventos && eventos.length > 0 ? (
+                <tbody>
+                  {eventos.map((evento, index) => (
+                    <tr key={index}>
+                      <td>{evento.event_name}</td>
+
+                      <td>{evento.start_date}</td>
+
+                      <td className={styles.actions}>
+                        <button onClick={() => handleEdit(index)}>
+                          <FaPencil className={styles.icon_mobile} />
+                        </button>
+                        <button onClick={() => handleViewDetails(index)}>
+                          <FaEye className={styles.icon_mobile} />
+                        </button>
+                        <button onClick={() => handleDelete(index)}>
+                          <FaEraser className={styles.icon_mobile} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              ) : (
+                <tbody>
+                  <tr>
+                    <td colSpan="6">No hay eventos disponibles.</td>
+                  </tr>
+                </tbody>
+              )}
+            </table>
+          )}
+
+          <div className={styles.eventDetail}>
+            {selectedEvent && (
+              <>
+                <h2>{selectedEvent.event_name}</h2>
+                <h3>{selectedEvent.event_type}</h3>
+                <h3>{selectedEvent.event_state}</h3>
+                <p>{selectedEvent.start_date}</p>
+                <p>{selectedEvent.end_date}</p>
+                <h3>{selectedEvent.num_tickets}</h3>
+                <p>{selectedEvent.event_desc}</p>
+              </>
             )}
-          </table>
-        )}
+          </div>
+        </div>
       </main>
       {showModal && (
         <div className={styles.modalMain}>

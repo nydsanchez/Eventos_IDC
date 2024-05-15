@@ -1,6 +1,6 @@
 .pageHeader {
   width: 100%;
-  margin-bottom: 5rem;
+  margin-bottom: 2rem;
   padding: 2rem 0;
   background: #fff;
   display: flex;
@@ -30,13 +30,19 @@
   box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.015);
   border-radius: 11px;
 }
-.table {
-  width: 100;
 
+.grid_container_2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2.6rem;
+}
+
+.table {
   /* border: 1px solid #343a40;  background: #fff;*/
   border-collapse: collapse; /* junta los border */
   font-size: 1.4rem;
   border: 1px solid var(--bg-color-active);
+  padding: 0 1.6rem;
 }
 .table th tr {
   width: 25%;
@@ -64,7 +70,7 @@
   font-size: 2.42rem;
   font-family: "open sans" sans-serif;
   text-align: right;
-  margin-bottom: 1.7rem;
+  padding-top: 0.5rem;
 }
 
 .actions {
@@ -82,4 +88,8 @@
 
 .icon_mobile {
   color: var(--color-main);
+}
+
+.selected {
+  background-color: black; /* Cambia el color de fondo según lo necesites */
 }

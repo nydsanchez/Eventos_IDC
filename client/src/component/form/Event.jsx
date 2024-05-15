@@ -27,7 +27,7 @@ export default function Event({ onClose }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNewData({ ...newData, [name]: value });
+    setNewData({ ...newData, [name]: value.toUpperCase() });
 
     const updatedErrors = validation({ ...newData, [name]: value });
     setErrors(updatedErrors);
