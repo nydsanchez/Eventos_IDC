@@ -1,4 +1,4 @@
-import { ADD_DATA_EVENT, GET_DATA_EVENT } from "./action_types";
+import { ADD_DATA_EVENT, GET_DATA_EVENT, DELETE_EVENT } from "./action_types";
 
 const initialState = {
   data: {
@@ -50,6 +50,18 @@ const reducer = (state = initialState, { type, payload }) => {
       return newState;
     }
 
+    case DELETE_EVENT: {
+      const updatedEventos = state.data.eventos.filter(
+        (evento) => evento.id !== payload
+      );
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          eventos: updatedEventos,
+        },
+      };
+    }
     default:
       return state;
   }

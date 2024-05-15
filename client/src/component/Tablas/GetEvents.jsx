@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 
-import { getDataEvent } from "../../redux/actions";
+import { getDataEvent, deleteEvent } from "../../redux/actions";
 import { FaPencil, FaEye, FaEraser } from "react-icons/fa6";
 
 import Header from "../header/Header";
@@ -37,6 +37,14 @@ function GetEvents() {
   const handleDelete = (index) => {
     // Lógica para eliminar el elemento con el índice proporcionado
     console.log("Delete item at index:", index);
+
+    const confirmed = window.confirm(
+      "¿Estás seguro de que deseas eliminar este evento?"
+    );
+    if (confirmed) {
+      // Envía una acción de Redux para eliminar el evento del estado global
+      dispatch(deleteEvent(eventos[index].id_event));
+    }
   };
 
   useEffect(() => {

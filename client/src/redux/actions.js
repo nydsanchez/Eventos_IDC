@@ -1,5 +1,10 @@
 import axios from "axios";
-import { GET_DATA_EVENT, ADD_DATA_EVENT, UPDATE_DATA } from "./action_types";
+import {
+  GET_DATA_EVENT,
+  ADD_DATA_EVENT,
+  UPDATE_DATA,
+  DELETE_EVENT,
+} from "./action_types";
 
 const URL = "http://localhost:4000";
 
@@ -47,6 +52,21 @@ export const updateData = (entity, newData) => {
       console.warn(error);
     }
   };
+};
+
+export const deleteEvent = (eventId) => async (dispatch) => {
+  console.log("id del evento en el actions: ", eventId);
+  try {
+    await axios.delete(`${URL}/eventos/${eventId}`);
+    dispatch({
+      type: DELETE_EVENT,
+      payload: eventId, // Envía el ID del evento eliminado al reducer
+    });
+    dispatch(getDataEvent());
+  } catch (error) {
+    console.error("Error deleting event:", error);
+    throw error;
+  }
 };
 // export const getInitialData = () => {
 //   return async (dispatch) => {

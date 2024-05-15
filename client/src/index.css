@@ -34,7 +34,7 @@ body {
     "nav   main";
 
   grid-template-columns: 1fr 5fr;
-  grid-template-rows: 7rem 100vh;
+  grid-template-rows: 7rem auto;
 
   column-gap: 2.6rem;
   overflow-x: hidden;
@@ -54,4 +54,7 @@ body {
 .app > main {
   grid-area: main;
   margin: 3rem;
+  background: var(--color-sec);
+
+  padding-bottom: 2.5rem;
 }
