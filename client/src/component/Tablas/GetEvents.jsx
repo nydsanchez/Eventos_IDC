@@ -44,11 +44,15 @@ function GetEvents() {
     }
   };
 
+  const closeDetail = () => {
+    setSelectedEvent(null);
+  };
+
   useEffect(() => {
     dispatch(getDataEvent())
       .then(() => setLoading(false)) // Una vez que los datos se cargan, cambia el estado de carga a falso
       .catch((error) => console.error("Error fetching data:", error));
-  }, [dispatch]);
+  }, [dispatch, selectedEvent]);
 
   return (
     <div className="app">
@@ -59,7 +63,8 @@ function GetEvents() {
           <h2 className={styles.subtitle}>Lista de Eventos</h2>
           <button onClick={handleOpenModal}>➕ Agregar evento</button>
         </div>
-        <div className={styles.grid_container_2col}>
+
+        <div className={selectedEvent ? styles.grid_container_2col : null}>
           {loading ? ( // Mostrar un indicador de carga mientras se cargan los datos
             <p>Loading...</p>
           ) : (
@@ -77,7 +82,6 @@ function GetEvents() {
                   {eventos.map((evento, index) => (
                     <tr key={index}>
                       <td>{evento.event_name}</td>
-
                       <td>{evento.start_date}</td>
 
                       <td className={styles.actions}>
@@ -103,20 +107,33 @@ function GetEvents() {
               )}
             </table>
           )}
-
-          <div className={styles.eventDetail}>
-            {selectedEvent && (
+          {selectedEvent && (
+            <div className={styles.eventDetail}>
               <>
-                <h2>{selectedEvent.event_name}</h2>
-                <h3>{selectedEvent.event_type}</h3>
-                <h3>{selectedEvent.event_state}</h3>
-                <p>{selectedEvent.start_date}</p>
-                <p>{selectedEvent.end_date}</p>
-                <h3>{selectedEvent.num_tickets}</h3>
-                <p>{selectedEvent.event_desc}</p>
+                <h2> {selectedEvent.event_name}</h2>
+                <h3>
+                  <span>Tipo de evento:</span> {selectedEvent.event_type}
+                </h3>
+                <h3>
+                  <span>Estado del evento:</span> {selectedEvent.event_state}
+                </h3>
+                <h3>
+                  <span>Fecha de inicio:</span> {selectedEvent.start_date}
+                </h3>
+                <h3>
+                  <span>Fecha de finalización:</span> {selectedEvent.end_date}
+                </h3>
+                <h3>
+                  <span>Número de cupos:</span> {selectedEvent.num_tickets}
+                </h3>
+                <p>
+                  <span>Descripción del evento:</span>{" "}
+                  {selectedEvent.event_desc}
+                </p>
+                <button onClick={() => closeDetail()}>✖ </button>
               </>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </main>
       {showModal && (

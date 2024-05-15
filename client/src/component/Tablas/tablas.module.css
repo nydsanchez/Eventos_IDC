@@ -7,14 +7,14 @@
   justify-content: space-around;
 }
 
-.pageHeader > button {
+.container button {
   border-radius: 10px;
   padding: 6px;
   border: 1px solid #ec974b;
   transition: all 0.3s;
 }
 
-.pageHeader > button:hover {
+.container button:hover {
   cursor: pointer;
   background: #ec974b;
 }
@@ -90,6 +90,38 @@
   color: var(--color-main);
 }
 
-.selected {
-  background-color: black; /* Cambia el color de fondo según lo necesites */
+.eventDetail {
+  background: linear-gradient(to bottom, #000046, #1cb5e0);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 10px;
+
+  height: 50%;
+  border-radius: 15px;
+  padding-left: 20px;
+  color: white;
+  gap: 0.8rem;
+  position: relative;
+}
+
+.eventDetail > h2 {
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  width: 100%;
+}
+.eventDetail > h3,
+.eventDetail > p {
+  font-size: 1.6rem;
+}
+
+.eventDetail span {
+  font-weight: bold;
+}
+
+.eventDetail button {
+  position: absolute;
+  left: 90%;
 }
