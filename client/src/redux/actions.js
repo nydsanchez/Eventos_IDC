@@ -36,17 +36,16 @@ export const getDataEvent = () => async (dispatch) => {
   }
 };
 
-export const updateData = (entity, newData) => {
+export const updateDataEvent = (newData) => {
   return async (dispatch) => {
     try {
       const response = await axios.put(
-        `${URL}/${entity}/${newData.id}`,
+        `${URL}/eventos/${newData.id_event}`,
         newData
       );
       dispatch({
         type: UPDATE_DATA,
-        payload: { entity, data: response.data },
-        success: true,
+        payload: response.data,
       });
     } catch (error) {
       console.warn(error);
@@ -55,7 +54,6 @@ export const updateData = (entity, newData) => {
 };
 
 export const deleteEvent = (eventId) => async (dispatch) => {
-  console.log("id del evento en el actions: ", eventId);
   try {
     await axios.delete(`${URL}/eventos/${eventId}`);
     dispatch({

@@ -1,4 +1,9 @@
-import { ADD_DATA_EVENT, GET_DATA_EVENT, DELETE_EVENT } from "./action_types";
+import {
+  ADD_DATA_EVENT,
+  GET_DATA_EVENT,
+  DELETE_EVENT,
+  UPDATE_DATA,
+} from "./action_types";
 
 const initialState = {
   data: {
@@ -49,6 +54,21 @@ const reducer = (state = initialState, { type, payload }) => {
       // );
       return newState;
     }
+    case UPDATE_DATA:
+      return {
+        ...state,
+        eventos: state.eventos.map((evento) => {
+          if (evento.id_event === payload.id_event) {
+            return {
+              ...evento,
+              // Actualizar solo los campos necesarios con los datos recibidos del servidor
+              // Puedes modificar esta lógica según la estructura de tu evento
+              ...payload,
+            };
+          }
+          return evento;
+        }),
+      };
 
     case DELETE_EVENT: {
       const updatedEventos = state.data.eventos.filter(

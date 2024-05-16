@@ -19,6 +19,7 @@ function GetEvents() {
 
   const handleOpenModal = () => {
     setShowModal(true);
+    //setSelectedEvent(null);
   };
 
   const handleCloseModal = () => {
@@ -28,6 +29,15 @@ function GetEvents() {
   const handleEdit = (index) => {
     // Lógica para editar el elemento con el índice proporcionado
     console.log("Edit item at index:", index);
+    const eventXedit = eventos[index];
+    console.log("eventXedit: ", eventXedit);
+    setTimeout(() => {
+      setSelectedEvent(eventXedit);
+      console.log("SELECTED EVENT: ", selectedEvent);
+    }, 0);
+
+    // Establece el evento seleccionado para editar
+    // handleOpenModal();
   };
 
   const handleViewDetails = (index) => {
@@ -52,7 +62,7 @@ function GetEvents() {
     dispatch(getDataEvent())
       .then(() => setLoading(false)) // Una vez que los datos se cargan, cambia el estado de carga a falso
       .catch((error) => console.error("Error fetching data:", error));
-  }, [dispatch, selectedEvent]);
+  }, [dispatch]);
 
   return (
     <div className="app">
@@ -139,7 +149,7 @@ function GetEvents() {
       {showModal && (
         <div className={styles.modalMain}>
           <div className={styles.modalContent}>
-            <Event onClose={handleCloseModal} />
+            <Event onClose={handleCloseModal} eventToEdit={selectedEvent} />
           </div>
         </div>
       )}

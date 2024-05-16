@@ -27,7 +27,7 @@ export default function Event({ onClose }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNewData({ ...newData, [name]: value });
+    setNewData({ ...newData, [name]: value.toUpperCase() });
 
     const updatedErrors = validation({ ...newData, [name]: value });
     setErrors(updatedErrors);
@@ -93,7 +93,7 @@ export default function Event({ onClose }) {
                 <option value="Capacitación">Capacitación</option>
                 <option value="Retiro">Retiro</option>
                 <option value="Culto Unido">Culto Unido</option>
-                <option value="Taller">Estelí</option>
+                <option value="Taller">Taller</option>
                 <option value="Confraternidad">Confraternidad</option>
                 <option value="Otro">Otro</option>
               </select>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addDataEvent } from "../../redux/actions";
+import { addDataEvent, updateDataEvent } from "../../redux/actions";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -8,9 +8,10 @@ import PropTypes from "prop-types";
 import validation from "../../assets/javascript/validation";
 import styles from "./form.module.css";
 
-export default function Event({ onClose }) {
+export default function Event({ onClose, eventToEdit }) {
   Event.propTypes = {
-    onClose: PropTypes.func.isRequired, // onClose debe ser una función y es requerida
+    onClose: PropTypes.func.isRequired,
+    eventToEdit: PropTypes.object,
   };
 
   const [newData, setNewData] = useState({
@@ -20,6 +21,7 @@ export default function Event({ onClose }) {
     end_date: null,
     tickets: 0,
     description: "",
+    ...eventToEdit,
   });
   const [errors, setErrors] = useState({});
   const loading = useSelector((state) => state.loading);
@@ -41,7 +43,11 @@ export default function Event({ onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addDataEvent(newData));
+    if (eventToEdit) {
+      dispatch(updateDataEvent(newData)); // Actualiza el evento
+    } else {
+      dispatch(addDataEvent(newData)); // Agrega un nuevo evento
+    }
     onClose();
   };
 
@@ -55,7 +61,8 @@ export default function Event({ onClose }) {
 
       <div className={styles.modalContent}>
         <div className={styles.grid_container_text}>
-          <h3>Registro de Eventos</h3>
+          <h3> {eventToEdit ? "Modificar Evento" : "Agregar Evento"}</h3>
+          {console.log(eventToEdit)}
           <p>
             Completa los datos de generales del evento para poder gestionar las
             tickets y asistencia del evento.
