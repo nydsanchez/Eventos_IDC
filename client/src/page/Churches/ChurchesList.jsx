@@ -1,15 +1,13 @@
 import Header from "../../components/header/Header";
-import Dashboard from "../../components/dashboard/Dashboard";
 import Menu from "../../components/menu/MenuEventos";
+import Churches from "../../components/Tablas/Churches";
 
-function homepage() {
+export default function ChurchesList() {
   return (
     <div className="app">
       <Header />
       <Menu />
-      <Dashboard />
+      <Churches />
     </div>
   );
 }
-
-export default homepage;

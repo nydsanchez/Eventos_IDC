@@ -3,32 +3,23 @@ const { DataTypes } = require("sequelize");
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define(
-    "Tickets",
-    {
-      id_event: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true, // Marcar como clave primaria
-      },
-      id_ticket: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-      },
-
-      vendedor: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      state_ticket: {
-        type: DataTypes.ENUM("reservado", "utilizado", "comprado"),
-        allowNull: false,
-        defaultValue: "reservado",
-      },
+  sequelize.define("Tickets", {
+    id_ticket: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      autoIncrement: true,
     },
-    {
-      timestamps: false,
-    }
-  );
+
+    no_ticket: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      primaryKey: true,
+    },
+
+    state_ticket: {
+      type: DataTypes.ENUM("reservado", "utilizado", "comprado", "anulado"),
+      allowNull: false,
+      defaultValue: "reservado",
+    },
+  });
 };

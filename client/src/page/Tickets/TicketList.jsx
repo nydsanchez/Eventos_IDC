@@ -1,15 +1,13 @@
 import Header from "../../components/header/Header";
-import Dashboard from "../../components/dashboard/Dashboard";
 import Menu from "../../components/menu/MenuEventos";
+import TicketTable from "../../components/Tablas/TicketTable";
 
-function homepage() {
+export default function TicketList() {
   return (
     <div className="app">
       <Header />
       <Menu />
-      <Dashboard />
+      <TicketTable />
     </div>
   );
 }
-
-export default homepage;

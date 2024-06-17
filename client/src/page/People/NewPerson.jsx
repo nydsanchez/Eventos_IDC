@@ -1,15 +1,13 @@
 import Header from "../../components/header/Header";
-import Dashboard from "../../components/dashboard/Dashboard";
 import Menu from "../../components/menu/MenuEventos";
+import People from "../../components/form/People";
 
-function homepage() {
+export default function NewPerson() {
   return (
     <div className="app">
       <Header />
       <Menu />
-      <Dashboard />
+      <People />
     </div>
   );
 }
-
-export default homepage;

@@ -54,7 +54,7 @@ body {
 .app > main {
   grid-area: main;
   margin: 3rem;
-  background: var(--color-sec);
-
-  padding-bottom: 2.5rem;
+  background: #fff;
+  border-radius: 3rem;
+  /*padding-bottom: 2.5rem;*/
 }

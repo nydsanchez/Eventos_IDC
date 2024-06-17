@@ -1,6 +1,12 @@
 const router = require("express").Router();
 
-const regTicket = require("../controllers/Tickets");
+const {
+  regTicket,
+  getTickets,
+  updateTicket,
+  voidTicket,
+} = require("../controllers/Tickets");
+
 const {
   getAllChurches,
   postChurch,
@@ -8,13 +14,7 @@ const {
   editChurch,
   deleteChurch,
 } = require("../controllers/Church");
-const {
-  getAllEvents,
-  postEvento,
-  getEvent,
-  editEvent,
-  deleteEvent,
-} = require("../controllers/Evento");
+
 const {
   postPeople,
   getAllPeople,
@@ -22,13 +22,6 @@ const {
   editPerson,
   deletePerson,
 } = require("../controllers/People");
-
-//Gestión de Eventos
-router.post("/eventos", postEvento);
-router.get("/eventos", getAllEvents);
-router.get("/eventos/:id", getEvent);
-router.put("/eventos/:id", editEvent);
-router.delete("/eventos/:id", deleteEvent);
 
 //Gestión de Iglesias
 router.post("/churches", postChurch);
@@ -45,21 +38,9 @@ router.get("/people/:id", getPerson);
 router.delete("/people/:id", deletePerson);
 
 //Gestión de Tickets
-router.post("/eventos/:eventId/tickets", regTicket);
-/*router.get("/eventos/:eventId/tickets", fn);
-router.get("/tickets/:eventId/:idTicket", fn);
-router.put("/tickets/:eventId/:idTicket", fn);
-router.delete("/tickets/:eventId/:idTicket", fn);*/
-
-//Registro y Verificación de Asistencia
-//router.post("/tickets/:eventId/attend", fn); //Marcar asistencia para un ticket usando el número del ticket (desde la pistola lectora de código de barras).
-//router.get("/eventos/:eventId/attendance", fn); //Listar todos los registros de asistencia de un evento específico.
-
-//Rifas en Eventos
-//router.get("/eventos/{eventId}/raffle", fn);
-
-/* DASHBOARD DE UN EVENTO
-router.get("events/:eventId/dashboard", fn) 
-*/
+router.post("/tickets", regTicket);
+router.get("/tickets", getTickets);
+router.put("/tickets/:id", updateTicket);
+router.put("/tickets/:id/anular", voidTicket);
 
 module.exports = router;

@@ -1,15 +1,13 @@
 import Header from "../../components/header/Header";
-import Dashboard from "../../components/dashboard/Dashboard";
 import Menu from "../../components/menu/MenuEventos";
+import Ticket from "../../components/form/Ticket";
 
-function homepage() {
+export default function NewTicket() {
   return (
     <div className="app">
       <Header />
       <Menu />
-      <Dashboard />
+      <Ticket />
     </div>
   );
 }
-
-export default homepage;
