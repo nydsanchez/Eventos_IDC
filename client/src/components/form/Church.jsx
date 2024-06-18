@@ -39,7 +39,7 @@ export default function Church() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(addDataChurch(newData));
-    if (status === "succeeded") {
+    if (error === null) {
       window.alert("Los datos se han guardado exitosamente");
       delete_formData();
     } else {

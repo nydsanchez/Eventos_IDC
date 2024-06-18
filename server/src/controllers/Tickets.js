@@ -8,13 +8,13 @@ const regTicket = async (req, res) => {
     if (!(no_ticket && state_ticket && personCedula)) {
       return res.status(400).json({ error: "Faltan datos" });
     }
-
+    console.log(personCedula);
     let ticket = await Tickets.findByPk(no_ticket);
     if (!ticket) {
       ticket = await Tickets.create({
         no_ticket,
         state_ticket,
-        personCedula,
+        PersonCedula: personCedula,
       });
     }
     return res

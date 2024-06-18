@@ -13,16 +13,29 @@ export const getDataTicket = createAsyncThunk(
 
 export const addDataTicket = createAsyncThunk(
   "tickets/addDataTicket",
-  async (newData) => {
-    const { data } = await axios.post(`${URL}/ticket`, newData);
-    return data;
+  async (newData, { getState, rejectWithValue }) => {
+    const state = getState();
+    const existingTicket = state.tickets.data.find(
+      (ticket) => ticket.PersonCedula === newData.personCedula
+    );
+
+    if (existingTicket) {
+      return rejectWithValue("Esta persona ya tiene un ticket asociado.");
+    }
+
+    try {
+      const { data } = await axios.post(`${URL}/tickets`, newData);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
   }
 );
 
 export const updateDataTicket = createAsyncThunk(
   "tickets/updateDataTicket",
   async (newData) => {
-    const { data } = await axios.put(`${URL}/ticket/${newData.id}`, newData);
+    const { data } = await axios.put(`${URL}/tickets/${newData.id}`, newData);
     return data;
   }
 );
@@ -43,6 +56,7 @@ const TicketsSlice = createSlice({
     error: null,
   },
   reducers: {},
+
   extraReducers: (builder) => {
     builder
       .addCase(getDataTicket.pending, (state) => {
@@ -59,10 +73,12 @@ const TicketsSlice = createSlice({
 
       .addCase(addDataTicket.fulfilled, (state, action) => {
         state.data.push(action.payload);
+        state.status = "succeeded";
+        state.error = null;
       })
       .addCase(addDataTicket.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
       })
 
       .addCase(updateDataTicket.fulfilled, (state, action) => {
@@ -81,6 +97,7 @@ const TicketsSlice = createSlice({
         if (index !== -1) {
           state.data[index] = action.payload;
         }
+        state.status = "succeeded";
       });
   },
 });

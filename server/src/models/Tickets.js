@@ -14,8 +14,13 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
       primaryKey: true,
+      validate: {
+        len: {
+          args: [11, 11],
+          msg: "El número de ticket debe tener exactamente 11 caracteres",
+        },
+      },
     },
-
     state_ticket: {
       type: DataTypes.ENUM("reservado", "utilizado", "comprado", "anulado"),
       allowNull: false,

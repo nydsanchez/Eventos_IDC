@@ -26,6 +26,11 @@
   width: 12rem;
 }
 
+.imgLogo2 {
+  width: 7rem;
+  margin-top: 0.8rem;
+}
+
 .headerText h1 {
   color: var(--color-title);
   font-size: 2.8rem;

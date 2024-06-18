@@ -4,9 +4,9 @@ import { getDataPeople } from "../../features/people/peopleSlice";
 
 import PropTypes from "prop-types";
 
-const SelectPeople = ({ person_Id, onChange }) => {
+const SelectPeople = ({ selectedPersonId, onChange }) => {
   SelectPeople.propTypes = {
-    person_Id: PropTypes.string.isRequired, // onClose debe ser una función y es requerida
+    selectedPersonId: PropTypes.string.isRequired, // onClose debe ser una función y es requerida
     onChange: PropTypes.func.isRequired, // isModal debe ser un booleano y es requerido
   };
 
@@ -22,18 +22,18 @@ const SelectPeople = ({ person_Id, onChange }) => {
 
   const handleSelectChange = (event) => {
     const selectedOptionId = event.target.value;
-    const selectedPersonId = data?.find(
+    const selectedPerson = data?.find(
       (entity) => entity.id === selectedOptionId
     );
-    onChange(selectedOptionId, selectedPersonId); // Llama a la función onChange prop
+    onChange(selectedOptionId, selectedPerson); // Llama a la función onChange prop
   };
 
   return (
-    <select value={person_Id} onChange={handleSelectChange}>
+    <select value={selectedPersonId} onChange={handleSelectChange}>
       <option value="">Seleccione una opción</option>
       {data && data.length > 0 ? (
         data.map((person) => (
-          <option key={person.id} value={person.id}>
+          <option key={person.cedula} value={person.cedula}>
             {person.name}
           </option>
         ))

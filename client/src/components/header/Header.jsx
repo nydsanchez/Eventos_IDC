@@ -9,6 +9,14 @@ const Header = () => {
         <h1>Encuentro de Predicadores </h1>
         <p>Iglesia de Cristo en Nicaragua | Evento presencial</p>
       </div>
+      <div>
+        <img
+          className={styles.imgLogo2}
+          src="/logoHeadName.png"
+          alt="logo SC - Consulting"
+        />
+        ;
+      </div>
     </header>
   );
 };

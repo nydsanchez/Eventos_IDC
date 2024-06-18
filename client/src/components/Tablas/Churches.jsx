@@ -34,8 +34,6 @@ function Churches() {
     }
   };
 
-  console.log("Renderizando Churches");
-
   useEffect(() => {
     if (status === "idle") {
       dispatch(getDataChurch());

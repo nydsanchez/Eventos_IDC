@@ -47,10 +47,12 @@ const churchSlice = createSlice({
     builder
       .addCase(getDataChurch.pending, (state) => {
         state.status = "loading";
+        state.error = null;
       })
       .addCase(getDataChurch.fulfilled, (state, action) => {
         state.data = action.payload;
         state.status = "succeeded";
+        state.error = null;
       })
       .addCase(getDataChurch.rejected, (state, action) => {
         state.status = "failed";
@@ -60,6 +62,7 @@ const churchSlice = createSlice({
       .addCase(addDataChurch.fulfilled, (state, action) => {
         state.data.push(action.payload);
         state.status = "succeeded";
+        state.error = null;
       })
       .addCase(addDataChurch.rejected, (state, action) => {
         state.status = "failed";
@@ -73,11 +76,14 @@ const churchSlice = createSlice({
         if (index !== -1) {
           state.data[index] = action.payload;
         }
+        state.error = null;
       })
+
       .addCase(deleteChurch.fulfilled, (state, action) => {
         state.data = state.data.filter(
           (Church) => Church.id !== action.payload
         );
+        state.error = null;
       });
   },
 });

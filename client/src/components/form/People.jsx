@@ -57,15 +57,15 @@ export default function People({ onClose, isModal }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(addDataPeople(newData));
-    if (error) {
-      window.alert(error);
-    } else {
+    if (error === null) {
       window.alert("Se ha guardado los datos exitosamente");
       if (isModal) {
         onClose(); // Cierra la modal al enviar el formulario
       }
 
       delete_formData();
+    } else {
+      window.alert(error);
     }
   };
 
@@ -152,7 +152,7 @@ export default function People({ onClose, isModal }) {
                 <option value="Matagalpa">Matagalpa</option>
                 <option value="Nueva Segovia">Nueva Segovia</option>
                 <option value="Rivas">Rivas</option>
-                <option value="Rio San Juan">Río San Juan</option>
+                <option value="Río San Juan">Río San Juan</option>
                 <option value="RACCN">Región Autonoma del Caribe Norte</option>
                 <option value="RACCS">Región Autonoma del Caribe Sur</option>
               </select>

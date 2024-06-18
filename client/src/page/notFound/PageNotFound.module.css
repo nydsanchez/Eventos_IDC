@@ -1,47 +1,63 @@
 .notfound {
+  width: 100vw;
+  background: var(--color-sec);
+  color: var(--color-sec);
+}
+
+.textoPage {
   display: flex;
   flex-flow: column;
   justify-content: center;
   align-items: center;
-  gap: 3.2rem;
-  position: relative;
+  width: 100vw;
+  height: 80vh;
+  background-image: linear-gradient(to right bottom, #004c9c4d, #00285a4d),
+    url("notfound.jpeg");
+  background-size: cover;
 }
-.img_NotFound {
-  width: 90%;
-  height: 80%;
-}
-.img_NotFound img {
+
+header {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.notfound h2 {
-  font-size: 6.4rem;
-}
-
-.notfound p {
-  color: inherit;
-  font-weight: bolder;
-  font-size: 3.2rem;
-  text-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.712);
 }
 
-.notfound a:link,
-.notfound a:visited {
-  display: inline-block;
-  text-decoration: none;
-  font-size: 1.8rem;
+.logo {
+  width: 20%;
+  margin-left: 2rem;
+}
+
+.title,
+.titleP {
+  font-size: 4rem;
+  margin-bottom: 2rem;
+}
+
+.titleP {
+  color: var(--color-main);
+  margin-left: 10rem;
+  margin-right: auto;
+}
+
+.message {
+  font-size: 2rem;
+  width: 70rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.homeButton {
+  padding: 10px 20px;
+  background-color: var(--color-main);
   color: #fff;
-  border: 1px solid #fff;
-  padding: 1.2rem;
-  border-radius: 6px;
-  transition: all 0.3s;
-  position: absolute;
-  bottom: 0;
-  transform: translate(0, -15rem);
-  transition: all 1s;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1.8rem;
+  transition: background-color 0.3s;
 }
 
-.notfound a:hover {
-  background: #00285a;
+.homeButton:hover {
+  background-color: #0056b3;
 }

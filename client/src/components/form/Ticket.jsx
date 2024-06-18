@@ -3,8 +3,8 @@ import { BsFillFloppy2Fill, BsXLg } from "react-icons/bs";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addDataTicket } from "../../features/ticket/ticketSlice";
-
-import validation from "../../js/validation";
+import MaskedInput from "react-text-mask";
+//import validation from "../../js/validation";
 import Persona from "./People";
 import styles from "./form.module.css";
 import SelectPeople from "../select/selectPeople";
@@ -28,17 +28,15 @@ export default function Ticket() {
     personCedula: "",
   });
 
-  const [errors, setErrors] = useState({});
+  //const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const error = useSelector((state) => state.tickets?.error);
+  //const error = useSelector((state) => state.tickets?.error);
   const status = useSelector((state) => state.tickets?.status);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewData({ ...newData, [name]: value });
-    const updatedErrors = validation({ ...newData, [name]: value });
-    setErrors(updatedErrors);
   };
 
   const handleSelectPersonChange = (id) => {
@@ -53,14 +51,14 @@ export default function Ticket() {
     });
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(addDataTicket(newData));
-    if (status === "succeeded") {
+    const resultAction = await dispatch(addDataTicket(newData));
+    if (addDataTicket.fulfilled.match(resultAction)) {
       window.alert("Los datos se han guardado exitosamente");
       delete_formData();
-    } else {
-      window.alert(error);
+    } else if (addDataTicket.rejected.match(resultAction)) {
+      window.alert(resultAction.payload || resultAction.error.message);
     }
   };
 
@@ -85,18 +83,30 @@ export default function Ticket() {
           <form className={styles.formChurch} onSubmit={handleSubmit}>
             <div>
               <label htmlFor="no_ticket">Número de ticket:</label>
-              <input
-                type="text"
-                name="no_ticket"
-                id="no_ticket"
+
+              <MaskedInput
+                mask={[
+                  /\d/,
+                  /\d/,
+                  /\d/,
+
+                  /\d/,
+                  /\d/,
+                  /\d/,
+
+                  /\d/,
+                  /\d/,
+                  /\d/,
+
+                  /\d/,
+                  /\d/,
+                ]}
+                guide={false}
                 value={newData.no_ticket}
                 onChange={handleChange}
+                name="no_ticket"
+                id="no_ticket"
               />
-              {errors.e1 ? (
-                <p className={styles.error_msg}>{errors.e1}</p>
-              ) : (
-                <p>&nbsp;</p>
-              )}
             </div>
 
             <div>
@@ -109,7 +119,7 @@ export default function Ticket() {
               >
                 <option value="">Seleccione una opción</option>
                 <option value="reservado">Reservado</option>
-                <option value="pagado">Pagado</option>
+                <option value="comprado">Comprado</option>
                 <option value="utilizado">Utilizado</option>
                 <option value="anulado">Anulado</option>
               </select>

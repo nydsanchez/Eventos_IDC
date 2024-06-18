@@ -17,6 +17,8 @@ function TicketTable() {
   const statusPl = useSelector((state) => state.people?.status);
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+
   const recordsPerPage = 7;
 
   const handleEdit = (id) => {
@@ -30,16 +32,20 @@ function TicketTable() {
   };
 
   const handleDelete = (id) => {
-    dispatch(anularTicket(id));
+    if (window.confirm("¿Estás seguro de que quieres cerrar el registro?")) {
+      dispatch(anularTicket(id)).then(() => {
+        dispatch(getDataTicket());
+      });
+    }
   };
-  console.log(tickets);
 
   useEffect(() => {
-    if (statusTk === "idle" && statusPl == "idle") {
+    if ((statusTk === "idle" && statusPl == "idle") || loading == true) {
       dispatch(getDataPeople());
       dispatch(getDataTicket());
+      setLoading(false);
     }
-  }, [statusTk, statusPl, dispatch]);
+  }, [loading, statusTk, statusPl, dispatch]);
 
   const getPersonName = (personId) => {
     const person = people.find((p) => p.cedula === personId);
@@ -63,8 +69,8 @@ function TicketTable() {
   } else if (statusTk === "succeeded") {
     content = (
       <tbody>
-        {currentRecords.map((tkt) => (
-          <tr key={tkt.id_ticket}>
+        {currentRecords.map((tkt, index) => (
+          <tr key={index}>
             <td>{tkt.no_ticket}</td>
             <td>{tkt.state_ticket}</td>
             <td>{getPersonName(tkt.PersonCedula)}</td>
