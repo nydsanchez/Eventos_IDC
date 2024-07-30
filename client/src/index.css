@@ -31,13 +31,13 @@ body {
   display: grid;
   grid-template-areas:
     "header header"
-    "nav   main";
-
+    "nav   main"
+    "footer footer";
   grid-template-columns: 1fr 5fr;
-  grid-template-rows: 7rem auto;
-
+  grid-template-rows: 7rem 1fr 7rem;
   column-gap: 2.6rem;
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
 .app > header {
@@ -56,5 +56,8 @@ body {
   margin: 3rem;
   background: #fff;
   border-radius: 3rem;
-  /*padding-bottom: 2.5rem;*/
+}
+
+.app > footer {
+  grid-area: footer;
 }

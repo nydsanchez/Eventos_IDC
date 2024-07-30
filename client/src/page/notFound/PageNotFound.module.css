@@ -2,6 +2,7 @@
   width: 100vw;
   background: var(--color-sec);
   color: var(--color-sec);
+  min-height: 100vh;
 }
 
 .textoPage {
@@ -10,7 +11,7 @@
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 80vh;
+  height: 74vh;
   background-image: linear-gradient(to right bottom, #004c9c4d, #00285a4d),
     url("notfound.jpeg");
   background-size: cover;
