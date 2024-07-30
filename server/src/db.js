@@ -41,14 +41,10 @@ const { People, Tickets, Attendances, Churches } = sequelize.models;
 People.hasOne(Tickets);
 Tickets.belongsTo(People);
 
-Tickets.hasOne(Attendances);
-Attendances.belongsTo(Tickets);
-
 Churches.hasMany(People);
 People.belongsTo(Churches);
 
 module.exports = {
-  Attendances,
   Churches,
   People,
   Tickets,
