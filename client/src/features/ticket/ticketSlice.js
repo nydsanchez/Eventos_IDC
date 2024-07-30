@@ -48,7 +48,7 @@ export const anularTicket = createAsyncThunk(
   }
 );
 
-const TicketsSlice = createSlice({
+const ticketsSlice = createSlice({
   name: "tickets",
   initialState: {
     data: [],
@@ -102,4 +102,4 @@ const TicketsSlice = createSlice({
   },
 });
 
-export default TicketsSlice.reducer;
+export default ticketsSlice.reducer;
