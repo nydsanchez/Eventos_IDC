@@ -10,12 +10,17 @@ const Header = () => {
         <p>Iglesia de Cristo en Nicaragua | Evento presencial</p>
       </div>
       <div>
-        <img
-          className={styles.imgLogo2}
-          src="/logoHeadName.png"
-          alt="logo SC - Consulting"
-        />
-        ;
+        <a
+          href="https://www.sc-consulting.online"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            className={styles.imgLogo2}
+            src="/logoHeadName.png"
+            alt="logo SC - Consulting"
+          />
+        </a>
       </div>
     </header>
   );

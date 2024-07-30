@@ -24,14 +24,16 @@ function Churches() {
   };
 
   const handleDelete = (id) => {
-    console.log(id);
-    var confirmacion = window.confirm(
-      "¿Está seguro que desea eliminar este registro? La acción no se puede deshacer."
-    );
-    if (confirmacion) {
-      dispatch(deleteChurch(id));
-      window.alert("El registro ha sido borrado");
+    if (
+      window.confirm(
+        "¿Está seguro que desea eliminar este registro? La acción no se puede deshacer."
+      )
+    ) {
+      dispatch(deleteChurch(id)).then(() => {
+        dispatch(getDataChurch());
+      });
     }
+    window.alert("El registro ha sido borrado");
   };
 
   useEffect(() => {

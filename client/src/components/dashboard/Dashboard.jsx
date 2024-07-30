@@ -102,7 +102,6 @@ const Dashboard = () => {
         <h2 className={styles.subtitle}>Dashboard</h2>
       </div>
       <div className={styles.boxDashboard}>
-        <h3>Datos generales</h3>
         <div className={styles.cardContainer}>
           {summary.map((elemento, index) => (
             <DataDashboard key={index} elemento={elemento} />

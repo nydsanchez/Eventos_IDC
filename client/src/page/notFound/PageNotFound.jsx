@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "./PageNotFound.module.css";
-
+import Footer from "../../components/footer/Footer";
 import logo from "/Logo-Hor-BG-BCO.png";
 
 const NotFound = () => {
@@ -23,6 +23,7 @@ const NotFound = () => {
           Volver a la página de inicio
         </Link>
       </main>
+      <Footer />
     </div>
   );
 };

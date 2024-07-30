@@ -1,6 +1,7 @@
 import Header from "../../components/header/Header";
 import Menu from "../../components/menu/MenuEventos";
 import Ticket from "../../components/form/Ticket";
+import Footer from "../../components/footer/Footer";
 
 export default function NewTicket() {
   return (
@@ -8,6 +9,7 @@ export default function NewTicket() {
       <Header />
       <Menu />
       <Ticket />
+      <Footer />
     </div>
   );
 }
