@@ -8,7 +8,7 @@ const regTicket = async (req, res) => {
     if (!(no_ticket && state_ticket && personCedula)) {
       return res.status(400).json({ error: "Faltan datos" });
     }
-    console.log(personCedula);
+
     let ticket = await Tickets.findByPk(no_ticket);
     if (!ticket) {
       ticket = await Tickets.create({
@@ -31,13 +31,7 @@ const getTickets = async (req, res) => {
     const count = await Tickets.count();
 
     if (count > 0) {
-      const allTickets = await Tickets.findAll({
-        where: {
-          state_ticket: {
-            [Op.ne]: "anulado",
-          },
-        },
-      });
+      const allTickets = await Tickets.findAll();
       return res.status(200).json(allTickets);
     } else {
       return res
@@ -57,7 +51,7 @@ const updateTicket = async (req, res) => {
     const { id } = req.params;
     const { state_ticket, personCedula } = req.body;
 
-    if (!state_ticket && !personCedula) {
+    if (!personCedula) {
       return res
         .status(400)
         .send(
@@ -74,15 +68,12 @@ const updateTicket = async (req, res) => {
     const updatedData = {};
 
     // Actualizar solo los campos modificados
-    if (state_ticket && state_ticket !== ticket.state_ticket) {
-      updatedData.state_ticket = state_ticket;
-    }
 
     if (personCedula && personCedula !== ticket.personCedula) {
       updatedData.personCedula = personCedula;
     }
 
-    await ticket.update(updatedData);
+    await ticket.save(updatedData);
 
     return res.status(200).json(ticket);
   } catch (error) {
@@ -93,21 +84,4 @@ const updateTicket = async (req, res) => {
   }
 };
 
-const voidTicket = async (req, res) => {
-  try {
-    const ticketId = req.params.id;
-    const ticket = await Tickets.findByPk(ticketId);
-
-    if (ticket) {
-      ticket.state_ticket = "anulado";
-      await ticket.save();
-      res.status(200).json({ message: "Ticket anulado" });
-    } else {
-      res.status(404).json({ error: "Ticket no encontrado" });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-module.exports = { regTicket, getTickets, updateTicket, voidTicket };
+module.exports = { regTicket, getTickets, updateTicket };

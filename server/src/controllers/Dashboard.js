@@ -1,80 +1,86 @@
-const { Attendances, Tickets, People, Churches } = require("../db");
+const { Tickets, People } = require("../db");
 
 const getAttendanceSummary = async (req, res) => {
   try {
-    // Calcular resúmenes de asistencia
-
-    const totalAsistentes = await Attendances.count();
-
-    const generoCounts = await Attendances.findAll({
-      attributes: [
-        "gender",
-        [
-          sequelize.fn("COUNT", sequelize.literal("DISTINCT person_id")),
-          "count",
-        ],
-      ],
-      include: [
-        {
-          model: Tickets,
-          include: [
-            {
-              model: People,
-              attributes: [],
-            },
-          ],
-        },
-      ],
-      group: ["gender"],
+    // Total de personas que asistieron
+    const totalAsistentes = await Tickets.count({
+      where: { state_ticket: "utilizado" },
     });
 
-    const iglesiasRepresentadas = await Attendances.count({
+    // Total de mujeres y hombres que asistieron
+    const generoCounts = await People.findAll({
       attributes: [
-        [
-          sequelize.fn("COUNT", sequelize.literal("DISTINCT church_id")),
-          "count",
-        ],
+        "genre",
+        [sequelize.fn("COUNT", sequelize.col("id")), "count"],
       ],
-      include: [
-        {
-          model: Tickets,
-          include: [
-            {
-              model: People,
-              attributes: [],
-            },
-          ],
-        },
-      ],
+      include: {
+        model: Tickets,
+        where: { state_ticket: "utilizado" },
+        attributes: [],
+      },
+      group: ["genre"],
     });
 
-    const departamentosRepresentados = await Attendances.count({
+    // Total por estado del país
+    const estadosRepresentados = await People.findAll({
       attributes: [
-        [
-          sequelize.fn("COUNT", sequelize.literal("DISTINCT department")),
-          "count",
-        ],
+        "state",
+        [sequelize.fn("COUNT", sequelize.col("id")), "count"],
       ],
-      include: [
-        {
-          model: Tickets,
-          include: [
-            {
-              model: People,
-              attributes: [],
-            },
-          ],
-        },
-      ],
+      include: {
+        model: Tickets,
+        where: { state_ticket: "utilizado" },
+        attributes: [],
+      },
+      group: ["state"],
     });
 
-    // Devolver resúmenes de asistencia
-    return res.status(200).json({
+    // Total de asistentes por iglesia
+    const iglesiasRepresentadas = await People.findAll({
+      attributes: [
+        "churchId",
+        [sequelize.fn("COUNT", sequelize.col("id")), "count"],
+      ],
+      include: {
+        model: Tickets,
+        where: { state_ticket: "utilizado" },
+        attributes: [],
+      },
+      group: ["churchId"],
+    });
+
+    // Contar el total de iglesias representadas (Número único de iglesias)
+    const totalIglesiasRepresentadas = await People.count({
+      include: {
+        model: Tickets,
+        where: { state_ticket: "utilizado" },
+        attributes: [],
+      },
+      attributes: ["churchId"],
+      group: ["churchId"],
+      distinct: true,
+    });
+
+    // Formatear la respuesta
+    const result = {
       totalAsistentes,
-      generoCounts,
-      iglesiasRepresentadas,
-      departamentosRepresentados,
-    });
+      generoCounts: generoCounts.map((g) => ({
+        genre: g.genre,
+        count: g.dataValues.count,
+      })),
+      estadosRepresentados: estadosRepresentados.map((e) => ({
+        state: e.state,
+        count: e.dataValues.count,
+      })),
+      iglesiasRepresentadas: iglesiasRepresentadas.map((i) => ({
+        churchId: i.churchId,
+        count: i.dataValues.count,
+      })),
+      totalIglesiasRepresentadas,
+    };
+
+    // Devolver el resumen de asistencia
+    return res.status(200).json(result);
   } catch (error) {
     console.error("Error al obtener los resúmenes de asistencia:", error);
     return res.status(500).json({

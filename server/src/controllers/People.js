@@ -6,7 +6,7 @@ const postPeople = async (req, res) => {
     const { person_id, name, state, address, phone, genre, ChurchId } =
       req.body;
 
-    if (!(person_id && name && address && phone && genre && ChurchId)) {
+    if (!(person_id && name && genre && ChurchId)) {
       return res.status(400).json({ error: "faltan datos" });
     }
 
@@ -123,7 +123,7 @@ const editPerson = async (req, res) => {
       updatedData.churchId = churchId;
     }
 
-    await person.update(updatedData);
+    await person.save(updatedData);
 
     return res.status(200).json(person);
   } catch (error) {

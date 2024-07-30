@@ -4,7 +4,6 @@ const {
   regTicket,
   getTickets,
   updateTicket,
-  voidTicket,
 } = require("../controllers/Tickets");
 
 const {
@@ -41,6 +40,5 @@ router.delete("/people/:id", deletePerson);
 router.post("/tickets", regTicket);
 router.get("/tickets", getTickets);
 router.put("/tickets/:id", updateTicket);
-router.put("/tickets/:id/anular", voidTicket);
 
 module.exports = router;

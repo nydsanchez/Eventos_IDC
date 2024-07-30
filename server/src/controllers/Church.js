@@ -3,9 +3,8 @@ const { Churches } = require("../db");
 const getAllChurches = async (req, res) => {
   try {
     const count = await Churches.count();
-    if (count !== 0) {
+    if (count > 0) {
       const allChurches = await Churches.findAll();
-
       return res.status(200).json(allChurches);
     } else {
       return res
@@ -21,11 +20,11 @@ const getAllChurches = async (req, res) => {
 const postChurch = async (req, res) => {
   try {
     const { name, state, address, phone } = req.body;
-    if (!(name && state && address && phone)) {
+    if (!(name && state)) {
       return res
         .status(400)
         .send(
-          "Faltan datos: se requiere nombre, departamento, direccion y telefono"
+          "Faltan datos: se requiere nombre y departamento, direccion y telefono"
         );
     }
 
@@ -35,8 +34,6 @@ const postChurch = async (req, res) => {
         church_state: state,
       },
       defaults: {
-        church_name: name,
-        church_state: state,
         church_address: address,
         church_phone: phone,
       },
@@ -44,7 +41,9 @@ const postChurch = async (req, res) => {
     if (created) {
       return res.status(201).json(church);
     } else {
-      return res.status(200).json(church);
+      return res
+        .status(200)
+        .json({ message: "Esta congregación ya ha sido registrada" });
     }
   } catch (error) {
     console.error("Error al registrar la iglesia:", error);
@@ -65,7 +64,6 @@ const getChurch = async (req, res) => {
       });
     }
   } catch (error) {
-    console.error("Error al registrar la iglesia:", error);
     return res.status(500).send("Error interno del servidor");
   }
 };
@@ -99,7 +97,7 @@ const editChurch = async (req, res) => {
       updatedData.church_phone = phone;
     }
 
-    await church.update(updatedData);
+    await church.save(updatedData);
 
     return res.status(200).json(church);
   } catch (error) {
